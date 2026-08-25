@@ -1,52 +1,75 @@
-{ config, lib, pkgs, inputs, ... }:
-
 {
-  imports = [
-    ./hardware.nix
+  self,
+  inputs,
+  ...
+}: {
+  flake.nixosConfigurations.powerhouse = inputs.nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    specialArgs = {inherit inputs self;};
+    modules = [
+      inputs.home-manager.nixosModules.home-manager
+      {
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          extraSpecialArgs = {inherit inputs self;};
+          backupFileExtension = "backup";
+        };
+      }
+      ./_hardware.nix
 
-    # System modules
-    ../../modules/system/hardware.nix
-    ../../modules/system/core.nix
-    ../../modules/system/hyprland/hyprland.nix
-    ../../modules/system/hyprland/quickshell.nix
-    ../../modules/system/hyprland/stylix.nix
+      # System modules
+      self.nixosModules.system
 
-    # Active Theme
-    ../../themes/andesite.nix
-  ];
+      # Active Theme
+      self.nixosModules.theme-andesite
 
-  networking.hostName = "powerhouse";
-  time.timeZone = "Asia/Jakarta";
-  i18n.defaultLocale = "en_US.UTF-8";
+      # Host-specific Configuration
+      ({pkgs, ...}: {
+        networking.hostName = "powerhouse";
+        time.timeZone = "Asia/Jakarta";
+        i18n.defaultLocale = "en_US.UTF-8";
 
-  # User Account (System-level)
-  users.users.kryisnn = {
-    isNormalUser = true;
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-      "docker"
-      "video"
-      "audio"
-      "input"
-      "docker"
-    ];
-    packages = with pkgs; [
-      tree
+        # User Account (System-level)
+        users.users.kryisnn = {
+          isNormalUser = true;
+          extraGroups = [
+            "wheel"
+            "networkmanager"
+            "docker"
+            "video"
+            "audio"
+            "input"
+          ];
+          packages = with pkgs; [
+            tree
+          ];
+        };
+
+        # Hardware
+        var = {
+          cpu = "intel";
+          gpu = "nvidia";
+          nvidia.mode = "desktop";
+        };
+
+        # User Configuration (Home Manager level)
+        home-manager.users.kryisnn = {...}: {
+          imports = with self.homeModules; [
+            base
+            general
+            hyprland
+            dev
+            dev-utils
+            productivity
+            productivity-utils
+            utils
+            gaming-steam
+          ];
+        };
+
+        system.stateVersion = "26.05";
+      })
     ];
   };
-
-  # Hardware
-  var.cpu = "intel";
-  var.gpu = "nvidia";
-  var.nvidia.mode = "desktop";
-
-  # User Configuration (Home Manager level)
-  home-manager.users.kryisnn = { ... }: {
-    imports = [
-      ../../modules/home/home.nix
-    ];
-  };
-
-  system.stateVersion = "26.05";
 }

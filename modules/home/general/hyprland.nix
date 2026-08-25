@@ -1,31 +1,35 @@
-{ osConfig, lib, pkgs, ... }: 
-let
-  border-size = config.theme.border-size;
-  gaps-in = config.theme.gaps-in;
-  gaps-out = config.theme.gaps-out;
-  active-opacity = config.theme.active-opacity;
-  inactive-opacity = config.theme.inactive-opacity;
-  rounding = config.theme.rounding;
-  blur = config.theme.blur;
-  keyboardLayout = config.var.keyboardLayout;
-  background = "rgba(" + config.lib.stylix.colors.base00 + "EE)";
-in {
-  wayland.windowManager.hyprland = {
-    enable = true;
-    settings = {
-      general = {
-        gaps_in = theme.gaps-in;
-        gaps_out = theme.gaps-out;
-        border_size = theme.border-size;
+{
+  flake.homeModules.hyprland = {osConfig, ...}: let
+    theme =
+      osConfig.theme or {
+        rounding = 20;
+        bar-height = 36;
+        gaps-in = 8;
+        gaps-out = 16;
+        active-opacity = 0.96;
+        inactive-opacity = 0.92;
+        blur = true;
+        border-size = 2;
+        animation-speed = "very-fast";
       };
-      decoration = {
-        rounding = theme.rounding;
-        active_opacity = theme.active-opacity;
-        inactive_opacity = theme.inactive-opacity;
-        blur = {
-          enabled = theme.blur;
-          size = 8;
-          passes = 2;
+  in {
+    wayland.windowManager.hyprland = {
+      enable = true;
+      settings = {
+        general = {
+          gaps_in = theme.gaps-in;
+          gaps_out = theme.gaps-out;
+          border_size = theme.border-size;
+        };
+        decoration = {
+          inherit (theme) rounding;
+          active_opacity = theme.active-opacity;
+          inactive_opacity = theme.inactive-opacity;
+          blur = {
+            enabled = theme.blur;
+            size = 8;
+            passes = 2;
+          };
         };
       };
     };

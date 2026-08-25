@@ -1,7 +1,10 @@
-{ config, lib, pkgs, inputs, ... }:
-
 {
-  environment.systemPackages = lib.optional (inputs ? quickshell) (
-    inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default
-  );
+  flake.nixosModules.quickshell = {
+    lib,
+    pkgs,
+    inputs,
+    ...
+  }: {
+    environment.systemPackages = lib.optional (inputs ? quickshell) inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  };
 }

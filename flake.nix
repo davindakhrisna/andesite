@@ -1,8 +1,15 @@
 {
-  description = "Flint - Multi-host NixOS Configuration";
+  description = "Flint - Multi-host NixOS Configuration (Dendritic)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+    import-tree = {
+      url = "github:denful/import-tree";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,27 +28,22 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... } @ inputs:
-    let
-      mkHost = hostName: nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs self; };
-        modules = [
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs self; };
-            home-manager.backupFileExtension = "backup";
-          }
-          ./hosts/${hostName}
-        ];
+  outputs = inputs @ {
+    flake-parts,
+    import-tree,
+    ...
+  }:
+    flake-parts.lib.mkFlake {inherit inputs;} ({lib, ...}: {
+      imports = [
+        (import-tree ./modules)
+        (import-tree ./hosts)
+        (import-tree ./themes)
+      ];
+
+      options.flake.homeModules = lib.mkOption {
+        type = lib.types.lazyAttrsOf lib.types.unspecified;
+        default = {};
+        description = "Home Manager modules";
       };
-    in
-    {
-      nixosConfigurations = {
-        powerhouse = mkHost "powerhouse";
-        template = mkHost "template";
-      };
-    };
+    });
 }

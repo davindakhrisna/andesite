@@ -1,17 +1,13 @@
-{ config, pkgs, ... }:
-
 {
-  imports = [
-    ./utils.nix
-  ];
+  flake.homeModules.dev = {pkgs, ...}: {
+    programs.git = {
+      enable = true;
+    };
 
-  programs.git = {
-    enable = true;
+    home.packages = with pkgs; [
+      tmux
+      alejandra
+      nix-direnv
+    ];
   };
-
-  home.packages = with pkgs; [
-    tmux
-    alejandra
-    nix-direnv
-  ];
 }
