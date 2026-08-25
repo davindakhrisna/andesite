@@ -37,7 +37,10 @@
         package = pkgs.rubik;
         name = "Rubik";
       };
-      serif = config.stylix.fonts.sansSerif;
+      serif = {
+        package = pkgs.rubik;
+        name = "Rubik";
+      };
       emoji = {
         package = pkgs.noto-fonts-color-emoji;
         name = "Noto Color Emoji";

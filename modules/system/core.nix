@@ -117,6 +117,9 @@
     };
   };
 
+  # Docker
+  virtualisation.docker.enable = true;
+
   # ------- Overlays ------- #
 
   nixpkgs.overlays = [

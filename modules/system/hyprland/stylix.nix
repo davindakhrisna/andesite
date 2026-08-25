@@ -8,14 +8,15 @@
     autoEnable = true;
   };
 
+  # Global Fonts & Glyphs
   fonts = {
     fontconfig.enable = true;
     packages = with pkgs; [
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
-      liberation_ttf
       font-awesome
+      nerd-fonts.symbols-only
     ];
   };
 }

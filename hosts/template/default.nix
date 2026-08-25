@@ -5,8 +5,13 @@
     ./hardware.nix
 
     # System modules
+    ../../modules/system/hardware.nix
     ../../modules/system/core.nix
-    # ../../modules/system/hyprland/hyprland.nix
+    ../../modules/system/hyprland/hyprland.nix
+    ../../modules/system/hyprland/stylix.nix
+
+    # Active Theme
+    ../../themes/andesite.nix
   ];
 
   networking.hostName = "template";
@@ -23,6 +28,7 @@
       "video"
       "audio"
       "input"
+      "docker"
     ];
     packages = with pkgs; [
       tree
@@ -30,12 +36,9 @@
   };
 
   # Hardware
-  var.cpu = "intel";   # "intel" | "amd"
-  var.gpu = "nvidia";  # "nvidia" | "amd" | "intel"
-  # If using Nvidia:
-  # var.nvidia.mode = "desktop";  # Dedicated Desktop GPU (default)
-  # var.nvidia.mode = "offload";  # Laptop Hybrid (Power Saver)
-  # var.nvidia.mode = "sync";     # Laptop Hybrid (Max Performance)
+  var.cpu = "intel";
+  var.gpu = "nvidia";
+  var.nvidia.mode = "desktop";
 
   # User Configuration (Home Manager level)
   home-manager.users.yourusername = { ... }: {

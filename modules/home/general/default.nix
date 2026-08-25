@@ -1,6 +1,10 @@
 { config, lib, pkgs, inputs, ... }:
 
 {
+  imports = [
+    ./hyprland.nix
+  ];
+
   home.packages = with pkgs; [
     brave
     foot
