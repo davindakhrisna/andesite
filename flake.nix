@@ -3,6 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
+
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -26,6 +28,27 @@
       url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+        opencode = {
+      url = "github:anomalyco/opencode";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    areofyl-fetch = {
+      url = "github:areofyl/fetch";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    gazelle = {
+      url = "github:Zeus-Deus/gazelle-tui";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hacker-news-tui = {
+      url = "github:danfry1/hacker-news-tui";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    pomo = {
+      url = "github:Bahaaio/pomo";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
   };
 
   outputs = inputs @ {

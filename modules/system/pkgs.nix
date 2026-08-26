@@ -1,7 +1,7 @@
 {
   flake.nixosModules.pkgs = {pkgs, ...}: {
     # Desktop packages
-    programs.chromium.enable = true;
+    programs.chromium.enable = true; # Also serve as fallback browser
 
     environment.systemPackages = with pkgs; [
       # Text Editors
@@ -16,6 +16,7 @@
       wget
       curl
       git
+      tmux
     ];
   };
 }

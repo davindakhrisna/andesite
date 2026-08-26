@@ -40,6 +40,7 @@
             "video"
             "audio"
             "input"
+            "adbusers"
           ];
           packages = with pkgs; [
             tree
@@ -59,12 +60,19 @@
             base
             general
             hyprland
-            dev
-            dev-utils
             productivity
             productivity-utils
             utils
-            gaming-steam
+            utils-tui
+
+            # Dev Modules
+            dev             # languages, package managers, cli tools
+            dev-utils       # agentic AI, db management, editors
+            dev-extra       # game dev and local AI stuff
+
+            # Entertainment
+            entertainment
+            entertainment-gaming
           ];
         };
 

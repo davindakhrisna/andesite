@@ -17,9 +17,14 @@
       defaultEditor = true;
     };
 
-    # AI
     home.packages = with pkgs; [
+      # GUI Dev Tools
+      dbgate
+      bruno
+
+      # AI
       google-antigravity-ide
+      opencode
     ];
   };
 }

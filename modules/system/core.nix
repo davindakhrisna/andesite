@@ -45,8 +45,22 @@
         pulse.enable = true;
         jack.enable = true;
       };
+      udisks2.enable = true;
+      udiskie = {
+        enable = true;
+        notify = true;
+        automount = true;
+        tray = "never";
+      };
+      ollama = {
+        enable = true;
+        acceleration = "cuda";
+      };
     };
 
+    # Android Debug Bridge
+    programs.adb.enable = true;
+    
     security.rtkit.enable = true;
 
     # Network Setup
@@ -121,9 +135,21 @@
     # Docker
     virtualisation.docker.enable = true;
 
+    # Waydroid -- CHANGEME
+    virtualisation.waydroid.enable = true;
+
     # ------- Overlays ------- #
     nixpkgs.overlays = [
       inputs.antigravity-nix.overlays.default
+      inputs.opencode.overlays.default
+
+      # Manual overlay
+      (final: prev: {
+        areofyl-fetch = inputs.areofyl-fetch.packages.${final.stdenv.hostPlatform.system}.default;
+        gazelle-tui = inputs.gazelle.packages.${final.stdenv.hostPlatform.system}.default;
+        hacker-news-tui = inputs.hacker-news-tui.packages.${final.stdenv.hostPlatform.system}.default;
+        pomo = inputs.pomo.packages.${final.stdenv.hostPlatform.system}.default;
+      })
     ];
   };
 }

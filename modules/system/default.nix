@@ -5,8 +5,8 @@
       hardware
       pkgs
       hyprland
-      quickshell
       stylix
+      gaming
     ];
   };
 }

@@ -15,6 +15,7 @@
   in {
     wayland.windowManager.hyprland = {
       enable = true;
+      systemd.enable = false;
       settings = {
         general = {
           gaps_in = theme.gaps-in;
