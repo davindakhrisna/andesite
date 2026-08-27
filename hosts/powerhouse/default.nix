@@ -57,11 +57,8 @@
           imports = with self.homeModules; [
             home-manager
             desktop
-            utils
-            utils-zsh
-            utils-starship
-            productivity-tui
-            productivity-gui
+            shell
+            productivity
             extra-pkgs
 
             # Dev Modules

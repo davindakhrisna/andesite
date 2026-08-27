@@ -1,5 +1,6 @@
-- [] desktop
-- [] dev
-- [] entertainment
-- [] productivity
-- [] extra
+- [x] desktop
+- [x] dev
+- [x] entertainment
+- [x] productivity
+- [x] extra
+- [x] shell

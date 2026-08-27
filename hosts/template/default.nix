@@ -33,6 +33,7 @@
         # User Account (System-level)
         users.users.yourusername = {
           isNormalUser = true;
+          shell = pkgs.zsh;
           extraGroups = [
             "wheel"
             "networkmanager"
@@ -56,11 +57,8 @@
           imports = with self.homeModules; [
             home-manager
             desktop
-            utils
-            utils-zsh
-            utils-starship
-            productivity-tui
-            productivity-gui
+            shell
+            productivity
             extra-pkgs
 
             # Dev Modules

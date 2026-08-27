@@ -35,6 +35,7 @@
     };
 
     # System Services
+    services.power-profiles-daemon.enable = true;
     security.rtkit.enable = true;
     services = {
       tailscale.enable = true;
@@ -59,7 +60,7 @@
     programs.git = {
       enable = true;
       config = {
-        safe.directory = [ "/home/kryisnn/.config/flint" "*" ];
+        safe.directory = ["*"];
       };
     };
 

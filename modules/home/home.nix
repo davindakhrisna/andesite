@@ -9,8 +9,6 @@
     home.stateVersion = "26.05";
     home.sessionVariables = {
       EDITOR = "nvim";
-      NIXOS_OZONE_WL = "1";
-      ZDOTDIR = "${config.xdg.configHome}/zsh";
 
       # NVIDIA & OpenGL cache
       CUDA_CACHE_PATH = "$HOME/.cache/nv";

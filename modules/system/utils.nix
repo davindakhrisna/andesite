@@ -4,9 +4,6 @@
     programs.chromium.enable = true; # Also serve as fallback browser
 
     environment.systemPackages = with pkgs; [
-      # Terminal
-      kitty
-
       # Development Tools
       htop
       nix-index
