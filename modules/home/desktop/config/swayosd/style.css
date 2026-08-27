@@ -1,0 +1,46 @@
+window {
+    background: rgba(24, 24, 37, 0.90);
+    border: 2px solid #8e94a8;
+    border-radius: 0px;
+    padding: 12px 18px;
+    font-family: "Iosevka Nerd Font", monospace;
+}
+
+#container {
+    margin: 4px;
+}
+
+progressbar:disabled,
+image:disabled {
+    opacity: 0.5;
+}
+
+progressbar {
+    min-height: 8px;
+    border-radius: 0px;
+    background: #313244;
+}
+
+trough {
+    min-height: 8px;
+    border-radius: 0px;
+    border: none;
+    background: #313244;
+}
+
+progress {
+    min-height: 8px;
+    border-radius: 0px;
+    border: none;
+    background: #8e94a8;
+}
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #cdd6f4;
+}
+
+image {
+    color: #cdd6f4;
+}

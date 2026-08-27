@@ -4,6 +4,7 @@
   "position": "top",
   "spacing": 0,
   "height": 28,
+  "width": 1440,
   "margin-top": 1,
   "modules-left": [
     "clock",

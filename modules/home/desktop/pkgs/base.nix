@@ -51,8 +51,6 @@
       cliphist
       rofimoji
       polkit_gnome
-      zathura
-      cava
     ];
 
     services.kanshi = {

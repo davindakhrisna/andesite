@@ -101,6 +101,15 @@ hl.window_rule({
     center = true,
 })
 
+hl.window_rule({
+    name = "screensaver",
+    match = {
+        class = "screensaver",
+    },
+    fullscreen = true,
+    border_size = 0,
+})
+
 ---------------------
 ---- LAYER RULES ----
 ---------------------
@@ -113,6 +122,18 @@ hl.layer_rule({
     dim_around = true,
     blur = true,
 })
+
+---------------------
+---- AUTOSTART ------
+---------------------
+
+hl.on("hyprland.start", function()
+    hl.dsp.exec_cmd("waybar")
+    hl.dsp.exec_cmd("hypridle")
+    hl.dsp.exec_cmd("awww-daemon")
+    hl.dsp.exec_cmd("dunst")
+    hl.dsp.exec_cmd("swayosd-server")
+end)
 
 ---------------------
 ---- KEYBINDINGS ----

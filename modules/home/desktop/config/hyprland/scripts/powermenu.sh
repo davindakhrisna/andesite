@@ -5,12 +5,12 @@ host=$(hostname)
 # Options
 lock="[1] Lock"
 logout="[2] Logout"
-suspend="[3] Suspend"
+saver="[3] Screen Saver"
 hibernate="[4] Hibernate"
 shutdown="[5] Shutdown"
 reboot="[6] Reboot"
 
-options="$lock\n$logout\n$suspend\n$hibernate\n$shutdown\n$reboot"
+options="$lock\n$logout\n$saver\n$hibernate\n$shutdown\n$reboot"
 
 chosen=$(echo -e "$options" | rofi -dmenu \
     -p "SESSION MANAGER" \
@@ -76,8 +76,8 @@ case "$chosen" in
     "$logout")
         hyprctl dispatch exit
         ;;
-    "$suspend")
-        systemctl suspend
+    "$saver")
+        "${0%/*}/screensaver.sh" start
         ;;
     "$hibernate")
         systemctl hibernate

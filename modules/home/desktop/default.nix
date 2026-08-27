@@ -4,7 +4,9 @@
     ./pkgs/hyprland.nix
     ./pkgs/waybar.nix
     ./pkgs/wallpaper.nix
-    ./pkgs/awww.nix
+    ./pkgs/lockscreen.nix
+    ./pkgs/dunst.nix
+    ./pkgs/swayosd.nix
   ];
 
   flake.homeModules.desktop = {
@@ -18,6 +20,9 @@
       desktop-hyprland
       desktop-waybar
       desktop-wallpaper
+      desktop-lockscreen
+      desktop-dunst
+      desktop-swayosd
       desktop-base
     ];
   };
