@@ -21,6 +21,10 @@
       config.lib.file.mkOutOfStoreSymlink "${cfgDir}/bindings.lua"
     );
 
+    xdg.configFile."hypr/animations.lua".source = lib.mkForce (
+      config.lib.file.mkOutOfStoreSymlink "${cfgDir}/animations.lua"
+    );
+
     xdg.configFile."hypr/hypridle.conf".source = lib.mkForce (
       config.lib.file.mkOutOfStoreSymlink "${lckDir}/hypridle.conf"
     );

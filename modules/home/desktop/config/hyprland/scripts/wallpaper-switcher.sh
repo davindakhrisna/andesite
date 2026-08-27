@@ -43,9 +43,6 @@ selected=$(generate_entries | rofi -dmenu \
         anchor: center;
         width: 780px;
         border: 2px solid;
-        border-color: #8e94a8;
-        border-radius: 6px;
-        background-color: #181825;
         padding: 12px;
     }
     mainbox {
@@ -54,8 +51,6 @@ selected=$(generate_entries | rofi -dmenu \
     }
     inputbar {
         padding: 8px 12px;
-        background-color: #1e1e2e;
-        border-radius: 4px;
         children: [ prompt, entry ];
     }
     prompt {
@@ -77,7 +72,6 @@ selected=$(generate_entries | rofi -dmenu \
     element {
         orientation: vertical;
         padding: 8px;
-        border-radius: 4px;
         spacing: 6px;
     }
     element-icon {
@@ -88,7 +82,6 @@ selected=$(generate_entries | rofi -dmenu \
     element-text {
         horizontal-align: 0.5;
         vertical-align: 0.5;
-        text-color: inherit;
     }
     message {
         padding: 6px 12px;

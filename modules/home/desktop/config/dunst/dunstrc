@@ -1,6 +1,6 @@
 [global]
     font = Iosevka Nerd Font 11
-    allow_markup = yes
+    markup = full
     format = "<b>%s</b>\n%b"
     sort = yes
     indicate_hidden = yes
@@ -17,7 +17,7 @@
     width = 340
     height = (0, 160)
     origin = top-right
-    offset = 16x16
+    offset = (16, 16)
     scale = 0
     notification_limit = 5
 
@@ -32,7 +32,8 @@
     ### Visual Style (No Rounding / Sharp Box) ###
     corner_radius = 0
     transparency = 0
-    separator_height = 2
+    gap_size = 10
+    separator_height = 0
     padding = 12
     horizontal_padding = 16
     text_icon_padding = 12
@@ -73,3 +74,29 @@
     foreground = "#f38ba8"
     frame_color = "#f38ba8"
     timeout = 0
+
+### Custom Rules ###
+
+[gamemode_enabled]
+    appname = "Game Mode"
+    summary = "*ENABLED*"
+    frame_color = "#a6e3a1"
+    timeout = 3
+
+[gamemode_disabled]
+    appname = "Game Mode"
+    summary = "*DISABLED*"
+    frame_color = "#8e94a8"
+    timeout = 3
+
+[nightlight_on]
+    appname = "Night Light"
+    summary = "*Activated*"
+    frame_color = "#fab387"
+    timeout = 3
+
+[nightlight_off]
+    appname = "Night Light"
+    summary = "*Deactivated*"
+    frame_color = "#8e94a8"
+    timeout = 3

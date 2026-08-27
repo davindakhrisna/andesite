@@ -68,29 +68,11 @@ hl.config({
     },
 })
 
---------------------
----- ANIMATIONS ----
---------------------
-
-hl.curve("snappy", {
-    type = "bezier",
-    points = { {0.25, 1}, {0.5, 1} }
-})
-hl.curve("smoothOut", {
-    type = "bezier",
-    points = { {0.16, 1}, {0.3, 1} }
-})
-
-hl.animation({ leaf = "windows",    enabled = true, speed = 4, bezier = "smoothOut" })
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 3, bezier = "snappy" })
-hl.animation({ leaf = "border",     enabled = true, speed = 4, bezier = "smoothOut" })
-hl.animation({ leaf = "fade",       enabled = true, speed = 3, bezier = "snappy" })
-hl.animation({ leaf = "workspaces", enabled = true, speed = 4, bezier = "smoothOut" })
-
 ----------------------
 ---- WINDOW RULES ----
 ----------------------
 
+-- TUI Modal Popups
 hl.window_rule({
     name = "tui-modal",
     match = {
@@ -101,6 +83,7 @@ hl.window_rule({
     center = true,
 })
 
+-- Fullscreen Screensaver (Cmatrix)
 hl.window_rule({
     name = "screensaver",
     match = {
@@ -108,6 +91,30 @@ hl.window_rule({
     },
     fullscreen = true,
     border_size = 0,
+})
+
+-- Satty Screenshot Editor
+hl.window_rule({
+    name = "satty-editor",
+    match = {
+        class = "com.gabm.satty",
+    },
+    float = true,
+    center = true,
+})
+
+-- Picture-in-Picture (Floating in Bottom-Right Corner)
+hl.window_rule({
+    name = "pip-floating",
+    match = {
+        title = ".*[Pp]icture.*[Ii]n.*[Pp]icture.*",
+    },
+    float = true,
+    pin = true,
+    size = "640 360",
+    move = "100%-w-24 100%-h-24",
+    keep_aspect_ratio = true,
+    no_initial_focus = true,
 })
 
 ---------------------
@@ -128,15 +135,27 @@ hl.layer_rule({
 ---------------------
 
 hl.on("hyprland.start", function()
+    -- Core daemons
     hl.dsp.exec_cmd("waybar")
     hl.dsp.exec_cmd("hypridle")
     hl.dsp.exec_cmd("awww-daemon")
     hl.dsp.exec_cmd("dunst")
     hl.dsp.exec_cmd("swayosd-server")
+
+    -- Wipe clipboard history on fresh boot/session for privacy
+    hl.dsp.exec_cmd("cliphist wipe")
+
+    -- Clipboard history watcher
+    hl.dsp.exec_cmd("wl-paste --watch cliphist store")
+    hl.dsp.exec_cmd("wl-paste --type image --watch cliphist store")
+
+    -- Polkit authentication agent
+    hl.dsp.exec_cmd("/run/current-system/sw/libexec/polkit-gnome-authentication-agent-1")
 end)
 
 ---------------------
----- KEYBINDINGS ----
+---- MODULES --------
 ---------------------
 
+require("animations")
 require("bindings")

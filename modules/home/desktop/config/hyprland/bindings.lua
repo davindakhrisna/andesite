@@ -5,6 +5,7 @@
 
 local mainMod = "SUPER"
 local terminal = "kitty"
+local scriptDir = (os.getenv("HOME") or "") .. "/.config/flint/modules/home/desktop/config/hyprland/scripts/"
 
 ----------------------------------------
 -- Core Actions: Terminal, Close, Exit
@@ -18,17 +19,61 @@ hl.bind(mainMod .. " + T",      hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + Q",      hl.dsp.window.close())
 hl.bind(mainMod .. " + C",      hl.dsp.window.close())
 
--- Exit Hyprland session / Power Menu / Wallpaper Switcher
-local scriptDir = (os.getenv("HOME") or "") .. "/.config/flint/modules/home/desktop/config/hyprland/scripts/"
-hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd("hyprctl dispatch exit"))
+-- Application Launcher (Rofi)
+hl.bind(mainMod .. " + Space",  hl.dsp.exec_cmd("rofi -show drun -show-icons"))
+hl.bind(mainMod .. " + D",      hl.dsp.exec_cmd("rofi -show drun -show-icons"))
+
+-- Clipboard History (Cliphist + Rofi)
+hl.bind(mainMod .. " + V",      hl.dsp.exec_cmd(scriptDir .. "clipboard.sh"))
+
+-- Emoji & Glyph Picker (Rofimoji)
+hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("rofimoji --action copy"))
+
+-- Power Menu (Rofi TUI Modal)
 hl.bind(mainMod .. " + Escape",    hl.dsp.exec_cmd(scriptDir .. "powermenu.sh"))
+hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd("hyprctl dispatch exit"))
+
+-- Wallpaper Switcher (Awww + Rofi Visual Grid)
 hl.bind(mainMod .. " + W",         hl.dsp.exec_cmd(scriptDir .. "wallpaper-switcher.sh"))
 
--- Window layout & floating
-hl.bind(mainMod .. " + V",      hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + F",      hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + P",      hl.dsp.window.pseudo())
-hl.bind(mainMod .. " + J",      hl.dsp.layout("togglesplit"))
+-- Night Light Toggle (Hyprsunset)
+hl.bind(mainMod .. " + N",         hl.dsp.exec_cmd(scriptDir .. "nightlight.sh"))
+
+-- Game Mode Toggle (Max FPS)
+hl.bind(mainMod .. " + F1",        hl.dsp.exec_cmd(scriptDir .. "gamemode.sh"))
+
+----------------------------------------
+-- Screenshots (Grim + Slurp + Satty)
+-- [Workflow: Region/Full -> Copy to Clipboard FIRST -> Open in Satty]
+----------------------------------------
+
+-- Region / Area screenshot
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd(scriptDir .. "screenshot.sh region"))
+hl.bind("Print",                   hl.dsp.exec_cmd(scriptDir .. "screenshot.sh region"))
+
+-- Fullscreen screenshot
+hl.bind(mainMod .. " + Print",     hl.dsp.exec_cmd(scriptDir .. "screenshot.sh full"))
+
+-- Active Window screenshot
+hl.bind("ALT + Print",             hl.dsp.exec_cmd(scriptDir .. "screenshot.sh window"))
+
+----------------------------------------
+-- Window Layout & Floating
+----------------------------------------
+
+hl.bind(mainMod .. " + SHIFT + Space", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + F",             hl.dsp.window.fullscreen())
+hl.bind(mainMod .. " + P",             hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + J",             hl.dsp.layout("togglesplit"))
+
+----------------------------------------
+-- Scratchpad (Special Workspace)
+----------------------------------------
+
+-- Toggle special scratchpad workspace
+hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
+-- Move active window to special scratchpad workspace
+hl.bind(mainMod .. " + SHIFT + Z", hl.dsp.window.move({ workspace = "special:magic" }))
 
 ----------------------------------------
 -- Focus Movement
@@ -44,7 +89,6 @@ hl.bind(mainMod .. " + down",   hl.dsp.focus({ direction = "down" }))
 hl.bind(mainMod .. " + H",      hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + L",      hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + K",      hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + J",      hl.dsp.focus({ direction = "down" }))
 
 ----------------------------------------
 -- Workspace Navigation (1 - 10)
@@ -66,7 +110,7 @@ hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 ----------------------------------------
--- Media & Hardware Controls (SwayOSD)
+-- Media & Hardware Controls (SwayOSD + Playerctl)
 ----------------------------------------
 
 -- Audio Volume (Output)
@@ -80,3 +124,9 @@ hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("swayosd-client --input-volume m
 -- Brightness (Backlight)
 hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("swayosd-client --brightness raise"), { locked = true })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("swayosd-client --brightness lower"), { locked = true })
+
+-- Media Playback Controls (Playerctl)
+hl.bind("XF86AudioPlay",        hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+hl.bind("XF86AudioPause",       hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+hl.bind("XF86AudioNext",        hl.dsp.exec_cmd("playerctl next"),       { locked = true })
+hl.bind("XF86AudioPrev",        hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
