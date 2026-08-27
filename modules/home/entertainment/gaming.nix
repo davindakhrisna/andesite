@@ -22,7 +22,6 @@
 
     home.packages = with pkgs; [
       # Game Compatibility & Launchers
-      mangohud
       protonup-qt   
       heroic            
       gamescope

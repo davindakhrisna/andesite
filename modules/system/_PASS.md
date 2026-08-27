@@ -1,0 +1,6 @@
+- [x] pkgs.nix -- test curl, wget, tmux, git
+- [?] stylix.nix
+- [x] hardware.nix
+- [x] hyprland.nix
+- [x] gaming.nix -- test steam (if this checks out, then also check for gaming package at home)
+- [x] core.nix -- ask ai if these packages are working or not

@@ -1,26 +1,25 @@
 # CHECKPOINT
-dari atas kebawah, udah nyampe modules/home. baru selesai dev/ dan entertainment/. working on desktop dan productivity
+dari atas kebawah, modules/home, modules/system, dan modules/home/desktop sudah selesai direstrukturisasi dan di-theming TUI.
 
-bind these to replace the old one :
-- zoxide # cd
-- bat # cat
-- duf # df
-- eza # ls
+## [DONE] CLI & Modern Replacements :
+- [x] zoxide # cd
+- [x] bat # cat
+- [x] duf # df
+- [x] eza # ls
 
-these too, TUI for managing desktop :    
-- wiremix      # PipeWire TUI audio mixer
-- bluetui      # Bluetooth TUI manager
-- gazelle-tui  # NetworkManager WiFi TUI
-- hyprmon      # Hyprland Monitor layout & settings TUI
-- wlr-randr    # Wayland xrandr equivalent (query & set displays)
-- kanshi       # Dynamic display configuration daemon & profiler    
+## [DONE] TUI Desktop Management :
+- [x] wiremix      # PipeWire TUI audio mixer (SUPER+A / Quickshell click)
+- [x] bluetui      # Bluetooth TUI manager (SUPER+B / Quickshell click)
+- [x] gazelle-tui  # NetworkManager WiFi TUI (SUPER+N / Quickshell click)
+- [x] hyprmon      # Hyprland Monitor layout & settings TUI (SUPER+D)
+- [x] wlr-randr    # Wayland xrandr equivalent (query & set displays)
+- [x] kanshi       # Dynamic display configuration daemon & profiler
+- [x] btop         # System resource monitor (Quickshell stats click)
+- [x] yazi         # Modern TUI file manager (SUPER+E)
 
-what i want next :
-- cheatsheet of installed packages
-- bindings cheatsheet
-- ulti-basalt = is where you can navigate through productivity tui apps in easily
-- rofi for switching wallpaper and themes
-
-what i need next :
-- winboat
-- android emulator (super simple just one app)
+## [DONE] Features & Tooling :
+- [x] cheatsheet of installed packages & bindings (SUPER+/)
+- [x] rofi for switching wallpaper and themes (SUPER+W)
+- [x] CAD software (FreeCAD)
+- [x] Quickshell interactive monospace HUD Bar (Volume, WiFi, BT, Stats, Media, Clock, Workspaces)
+- [x] Hot-reloading dotfiles architecture via mkOutOfStoreSymlink (config/)

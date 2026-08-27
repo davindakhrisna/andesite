@@ -42,9 +42,6 @@
             "input"
             "adbusers"
           ];
-          packages = with pkgs; [
-            tree
-          ];
         };
 
         # Hardware

@@ -5,6 +5,18 @@
   }: {
     programs.git = {
       enable = true;
+      settings = {
+        user = {
+          name = "davindakhrisna";
+          email = "arpeggio.gns@gmail.com";
+        };
+        init.defaultBranch = "main";
+      };
+    };
+
+    programs.gh = {
+      enable = true;
+      gitCredentialHelper.enable = true;
     };
 
     programs.direnv = {
@@ -37,15 +49,33 @@
         # CLI & TUI Dev Tools
         lazygit
         lazydocker
-        gh
         jq
         netcat-gnu
         alejandra
+        nixfmt
         nix-prefetch-github
       ];
 
       sessionPath = ["$HOME/.local/share/go/bin"];
-      sessionVariables.GOPATH = "$HOME/.local/share/go";
+      sessionVariables = {
+        # Go
+        GOPATH = "$HOME/.local/share/go";
+        GOMODCACHE = "$HOME/.cache/go/mod";
+
+        # Android & Gradle
+        ANDROID_USER_HOME = "$HOME/.local/share/android";
+        GRADLE_USER_HOME = "$HOME/.local/share/gradle";
+
+        # Node & NPM
+        NPM_CONFIG_USERCONFIG = "$HOME/.config/npm/npmrc";
+        NPM_CONFIG_CACHE = "$HOME/.cache/npm";
+        NODE_REPL_HISTORY = "$HOME/.local/state/node_repl_history";
+
+        # Python
+        PYTHONSTARTUP = "$HOME/.config/python/pythonrc";
+        IPYTHONDIR = "$HOME/.config/ipython";
+        JUPYTER_CONFIG_DIR = "$HOME/.config/jupyter";
+      };
     };
   };
 }

@@ -6,6 +6,7 @@
       onlyoffice-desktopeditors # great compatibility with ms-office
       # masterpdfeditor # upstream vendor 404 on current version tarball
       pdfarranger     # PDF merge, split, rotate and edit tool
+      freecad         # 3D parametric CAD modeler
     ];
   };
 }

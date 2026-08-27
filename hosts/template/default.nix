@@ -42,9 +42,6 @@
             "input"
             "adbusers"
           ];
-          packages = with pkgs; [
-            tree
-          ];
         };
 
         # Hardware
@@ -57,11 +54,8 @@
         # User Configuration (Home Manager level)
         home-manager.users.yourusername = {...}: {
           imports = with self.homeModules; [
-            # Base -- !DO NOT TOUCH!
-            desktop
             home-manager
-
-            # 
+            desktop
             utils
             utils-zsh
             utils-starship

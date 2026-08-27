@@ -1,0 +1,113 @@
+/**
+ * Andesite Slate & Cyan Rofi Theme
+ */
+
+* {
+    bg0:         #181825;
+    bg1:         #1e1e2e;
+    bg2:         #313244;
+    fg0:         #cdd6f4;
+    fg1:         #a6adc8;
+    
+    accent:      #89dceb;
+    accent-alt:  #89b4fa;
+    urgent:      #f38ba8;
+
+    font:        "Maple Mono NF 12";
+    background-color: transparent;
+    text-color:       @fg0;
+
+    margin:      0px;
+    padding:     0px;
+    spacing:     0px;
+}
+
+window {
+    location:    center;
+    width:       540px;
+    border:      2px;
+    border-color: @accent;
+    border-radius: 0px;
+    background-color: @bg0;
+}
+
+mainbox {
+    padding:     12px;
+    spacing:     8px;
+    children:    [ inputbar, listview ];
+}
+
+inputbar {
+    spacing:     8px;
+    padding:     8px 12px;
+    border-radius: 0px;
+    background-color: @bg1;
+    border:      1px;
+    border-color: @bg2;
+    children:    [ prompt, entry ];
+}
+
+prompt {
+    text-color:  @accent;
+    font:        "Maple Mono NF Bold 12";
+}
+
+entry {
+    placeholder: "Type to search...";
+    placeholder-color: @fg1;
+    text-color:  @fg0;
+}
+
+listview {
+    padding:     4px 0px;
+    lines:       8;
+    columns:     1;
+    fixed-height: false;
+    spacing:     4px;
+}
+
+element {
+    padding:     8px 12px;
+    spacing:     10px;
+    border-radius: 0px;
+}
+
+element normal normal {
+    background-color: transparent;
+    text-color:       @fg0;
+}
+
+element normal urgent {
+    background-color: @urgent;
+    text-color:       @bg0;
+}
+
+element normal active {
+    background-color: @bg1;
+    text-color:       @accent;
+}
+
+element selected normal {
+    background-color: @accent;
+    text-color:       @bg0;
+}
+
+element selected active {
+    background-color: @accent-alt;
+    text-color:       @bg0;
+}
+
+element selected urgent {
+    background-color: @urgent;
+    text-color:       @bg0;
+}
+
+element-icon {
+    size:        1.1em;
+    vertical-align: 0.5;
+}
+
+element-text {
+    text-color:  inherit;
+    vertical-align: 0.5;
+}

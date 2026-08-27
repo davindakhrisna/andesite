@@ -1,12 +1,11 @@
 {
   flake.nixosModules.system = {self, ...}: {
     imports = with self.nixosModules; [
-      core
+      base
       gaming
       hardware
-      hyprland
-      pkgs
-      stylix
+      desktop
+      utils
     ];
   };
 }
