@@ -1,10 +1,11 @@
 {
-  flake.homeModules.productivity-gui = {pkgs, inputs, ...}: {
+  flake.homeModules.productivity-gui = {pkgs, ...}: {
     home.packages = with pkgs; [
       obsidian        # note taking
       xournalpp       # draw
-      onlyoffice-bin  # great compatibility with ms-office
-      masterpdfeditor # advanced pdf text editor
+      onlyoffice-desktopeditors # great compatibility with ms-office
+      # masterpdfeditor # upstream vendor 404 on current version tarball
+      pdfarranger     # PDF merge, split, rotate and edit tool
     ];
   };
 }

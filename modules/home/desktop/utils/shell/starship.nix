@@ -1,11 +1,9 @@
 {
   flake.homeModules.utils-starship = {
     config,
-    lib,
     ...
   }: let
     accent = "#${config.lib.stylix.colors.base0D}";
-    background-alt = "#${config.lib.stylix.colors.base01}";
     muted = "#${config.lib.stylix.colors.base04}";
   in {
     programs.starship = {

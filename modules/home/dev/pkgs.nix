@@ -12,37 +12,40 @@
       nix-direnv.enable = true;
     };
 
-    home.packages = with pkgs; [
-      # Web & General Dev Languages
-      go
-      nodejs
-      python3
+    home = {
+      packages = with pkgs; [
+        # Web & General Dev Languages
+        go
+        nodejs
+        python3
 
-      # Mobile Development
-      flutter
-      jdk17
-      android-tools
+        # Mobile Development
+        flutter
+        jdk17
+        android-tools
 
-      # Package Managers & Build Tools
-      pnpm
-      air
-      gcc
-      gnumake
-      pkg-config
+        # Package Managers & Build Tools
+        pnpm
+        air
+        gcc
+        gnumake
+        pkg-config
 
-      # Database
-      sqlite
+        # Database
+        sqlite
 
-      # CLI & TUI Dev Tools
-      lazygit
-      lazydocker
-      gh
-      jq
-      alejandra
-      nix-prefetch-github
-    ];
+        # CLI & TUI Dev Tools
+        lazygit
+        lazydocker
+        gh
+        jq
+        netcat-gnu
+        alejandra
+        nix-prefetch-github
+      ];
 
-    sessionPath = ["$HOME/.local/share/go/bin"];
-    sessionVariables.GOPATH = "$HOME/.local/share/go";
+      sessionPath = ["$HOME/.local/share/go/bin"];
+      sessionVariables.GOPATH = "$HOME/.local/share/go";
+    };
   };
 }

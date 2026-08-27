@@ -1,11 +1,12 @@
 # My shell configuration
 {
-  pkgs,
-  lib,
-  config,
-  ...
-}: {
-  home.packages = with pkgs; [
+  flake.homeModules.utils-zsh = {
+    pkgs,
+    lib,
+    config,
+    ...
+  }: {
+    home.packages = with pkgs; [
     bat
     ripgrep
   ];
@@ -14,9 +15,6 @@
     sessionVariables = {
       COLORTERM = "truecolor";
       MANPAGER = "bat -l man -p";
-    };
-    persistence."/persist" = lib.mkIf (config.var.impermanenceEnabled or false) {
-      files = [".zsh_history"];
     };
   };
 
@@ -151,4 +149,5 @@
       ''
     ];
   };
+};
 }

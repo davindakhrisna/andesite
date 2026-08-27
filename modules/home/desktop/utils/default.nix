@@ -1,7 +1,6 @@
-{
+{ self, ... }: {
   flake.homeModules.utils = {
     pkgs,
-    inputs,
     ...
   }: let
     ns = pkgs.writeShellApplication {
@@ -13,6 +12,11 @@
       text = ''exec "${pkgs.nix-search-tv.src}/nixpkgs.sh" "$@"'';
     };
   in {
+    imports = with self.homeModules; [
+      utils-starship
+      utils-zsh
+    ];
+
     home.packages = with pkgs; [
       ns            # nix search
       areofyl-fetch # animated fetch
@@ -33,6 +37,8 @@
       # Media
       yt-dlp
       ffmpeg
+      easyeffects
+      mpv
 
       # Clipboard
       wl-clipboard
@@ -43,6 +49,14 @@
       qt6.qtdeclarative
       hyprsunset   # Blue-light filter & color temperature utility
       wlsunset     # Fallback blue-light daemon
+      libnotify
     ];
+
+    services.udiskie = {
+      enable = true;
+      notify = true;
+      automount = true;
+      tray = "never";
+    };
   };
 }

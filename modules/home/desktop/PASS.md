@@ -1,0 +1,1 @@
+- the packages pass, but the config werent. so im going to boot to linux

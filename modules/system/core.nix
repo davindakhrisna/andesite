@@ -46,21 +46,16 @@
         jack.enable = true;
       };
       udisks2.enable = true;
-      udiskie = {
-        enable = true;
-        notify = true;
-        automount = true;
-        tray = "never";
-      };
       ollama = {
         enable = true;
-        acceleration = "cuda";
+        package = pkgs.ollama-cuda;
       };
     };
 
-    # Android Debug Bridge
-    programs.adb.enable = true;
-    
+    environment.systemPackages = with pkgs; [
+      android-tools
+    ];
+
     security.rtkit.enable = true;
 
     # Network Setup
@@ -144,7 +139,7 @@
       inputs.opencode.overlays.default
 
       # Manual overlay
-      (final: prev: {
+      (final: _: {
         areofyl-fetch = inputs.areofyl-fetch.packages.${final.stdenv.hostPlatform.system}.default;
         gazelle-tui = inputs.gazelle.packages.${final.stdenv.hostPlatform.system}.default;
         hacker-news-tui = inputs.hacker-news-tui.packages.${final.stdenv.hostPlatform.system}.default;

@@ -1,5 +1,5 @@
 {
-  flake.homeModules.base = _: {
+  flake.homeModules.home-manager = _: {
     xdg.enable = true;
     home.stateVersion = "26.05";
     home.sessionVariables = {

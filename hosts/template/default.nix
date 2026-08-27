@@ -7,7 +7,6 @@
     system = "x86_64-linux";
     specialArgs = {inherit inputs self;};
     modules = [
-      inputs.nix-flatpak.homeManagerModules.nix-flatpak
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager = {
@@ -15,15 +14,15 @@
           useUserPackages = true;
           extraSpecialArgs = {inherit inputs self;};
           backupFileExtension = "backup";
+          sharedModules = [
+            inputs.nix-flatpak.homeManagerModules.nix-flatpak
+          ];
         };
       }
       ./_hardware.nix
 
       # System modules
       self.nixosModules.system
-
-      # Active Theme
-      self.nixosModules.theme-andesite
 
       # Host-specific Configuration
       ({pkgs, ...}: {
@@ -58,12 +57,17 @@
         # User Configuration (Home Manager level)
         home-manager.users.yourusername = {...}: {
           imports = with self.homeModules; [
-            base
-            general
-            hyprland
-            productivity
-            productivity-utils
-            utils 
+            # Base -- !DO NOT TOUCH!
+            desktop
+            home-manager
+
+            # 
+            utils
+            utils-zsh
+            utils-starship
+            productivity-tui
+            productivity-gui
+            extra-pkgs
 
             # Dev Modules
             dev             # languages, package managers, cli tools
@@ -71,7 +75,7 @@
             dev-extra       # game dev and local AI stuff
 
             # Entertainment
-            entertainment
+            entertainment-social
             entertainment-gaming
           ];
         };

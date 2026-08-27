@@ -10,6 +10,12 @@
     stylix = {
       enable = true;
       autoEnable = true;
+
+    # Wallpaper Fallback
+      image = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/anotherhadi/awesome-wallpapers/main/wallpapers/the-cpu_animated_black.gif";
+        sha256 = "sha256-peigNzQDxvDqRCz9f0PPaejiAafD1o1q8H6kVpazhRE=";
+      };
     };
 
     # Global Fonts & Glyphs
