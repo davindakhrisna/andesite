@@ -1,19 +1,17 @@
-/**
- * Andesite Slate & Cyan Rofi Theme
- */
+@import "colors.rasi"
 
 * {
-    bg0:         #181825;
-    bg1:         #1e1e2e;
-    bg2:         #313244;
-    fg0:         #cdd6f4;
-    fg1:         #a6adc8;
+    bg0:         @wallust-bg;
+    bg1:         @wallust-bg-alt;
+    bg2:         @wallust-border;
+    fg0:         @wallust-fg;
+    fg1:         @wallust-fg-alt;
     
-    accent:      #89dceb;
-    accent-alt:  #89b4fa;
-    urgent:      #f38ba8;
+    accent:      @wallust-accent;
+    accent-alt:  @wallust-accent2;
+    urgent:      @wallust-urgent;
 
-    font:        "Maple Mono NF 12";
+    font:        "Iosevka Nerd Font 12";
     background-color: transparent;
     text-color:       @fg0;
 
@@ -49,7 +47,7 @@ inputbar {
 
 prompt {
     text-color:  @accent;
-    font:        "Maple Mono NF Bold 12";
+    font:        "Iosevka Nerd Font Bold 12";
 }
 
 entry {

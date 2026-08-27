@@ -56,8 +56,8 @@ QtObject {
     readonly property int barHeight: 38
     readonly property int barMargin: 6
     readonly property int pillHeight: 26
-    readonly property int pillRadius: 6
-    readonly property int cornerRadius: 8
+    readonly property int pillRadius: 0
+    readonly property int cornerRadius: 0
     readonly property int paddingSmall: 4
     readonly property int paddingNormal: 8
     readonly property int paddingLarge: 12

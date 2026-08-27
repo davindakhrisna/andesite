@@ -1,0 +1,13 @@
+/**
+ * Wallust Dynamic Rofi Palette
+ */
+* {
+    wallust-bg:       {{background}};
+    wallust-bg-alt:   {{color0}};
+    wallust-fg:       {{foreground}};
+    wallust-fg-alt:   {{color7}};
+    wallust-accent:   {{color4}};
+    wallust-accent2:  {{color6}};
+    wallust-urgent:   {{color1}};
+    wallust-border:   {{color8}};
+}

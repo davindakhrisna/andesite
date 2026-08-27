@@ -33,6 +33,7 @@
         # User Account (System-level)
         users.users.kryisnn = {
           isNormalUser = true;
+          shell = pkgs.zsh;
           extraGroups = [
             "wheel"
             "networkmanager"

@@ -14,7 +14,10 @@
       desktop-hypridle
       desktop-dunst
       desktop-awww
+      desktop-wallust
       desktop-wlogout
+      desktop-btop
+      desktop-yazi
     ]) ++ (lib.optional (inputs ? helium) inputs.helium.homeModules.default);
 
     home.packages = with pkgs;
@@ -25,8 +28,11 @@
       btop
       yazi
 
-      # password manager
-      bitwarden-desktop
+      # password manager (CLI & Rofi frontend)
+      rbw
+      rofi-rbw-wayland
+      wtype
+      pinentry-gnome3
 
       # file manager
       thunar
@@ -50,6 +56,11 @@
       satty        # Modern screenshot editor & annotation tool
       swappy       # Lightweight image editor
       wl-screenrec # Hardware-accelerated screen recorder
+
+      # System, Clipboard & Utilities
+      cliphist
+      rofimoji
+      polkit_gnome
     ];
 
     services.kanshi = {

@@ -25,7 +25,6 @@
       fzf
 
       # Modern replacements
-      zoxide  # cd
       bat     # cat
       duf     # df
       eza     # ls
@@ -45,12 +44,15 @@
       cliphist
 
       # runtime deps
-      adwaita-icon-theme
-      qt6.qtdeclarative
       hyprsunset   # Blue-light filter & color temperature utility
       wlsunset     # Fallback blue-light daemon
       libnotify
     ];
+
+    programs.zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+    };
 
     services.udiskie = {
       enable = true;

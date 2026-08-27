@@ -1,5 +1,5 @@
 - [x] pkgs.nix -- test curl, wget, tmux, git
-- [?] stylix.nix
+- [x] wallust (dynamic theme engine)
 - [x] hardware.nix
 - [x] hyprland.nix
 - [x] gaming.nix -- test steam (if this checks out, then also check for gaming package at home)

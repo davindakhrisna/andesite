@@ -11,6 +11,7 @@
           email = "arpeggio.gns@gmail.com";
         };
         init.defaultBranch = "main";
+        safe.directory = [ "/home/kryisnn/.config/flint" "*" ];
       };
     };
 

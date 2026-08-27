@@ -8,8 +8,7 @@
 local scriptDir = (os.getenv("HOME") or "") .. "/.config/flint/modules/home/desktop/config/hyprland/scripts/"
 
 hl.on("hyprland.start", function ()
-    hl.exec_cmd(scriptDir .. "auto-monitor.sh")
-    hl.exec_cmd("quickshell")
+    hl.exec_cmd(scriptDir .. "autostart.sh")
 end)
 
 ------------------
@@ -43,7 +42,7 @@ hl.config({
         layout = "dwindle",
     },
     decoration = {
-        rounding = 8,
+        rounding = 0,
         active_opacity = 0.98,
         inactive_opacity = 0.92,
         blur = {
@@ -94,6 +93,7 @@ hl.bind(mainMod .. " + Q",           hl.dsp.window.close())
 hl.bind(mainMod .. " + M",           hl.dsp.exec_cmd("hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + V",           hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + P",           hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + SHIFT + P",   hl.dsp.exec_cmd("rofi-rbw"))
 hl.bind(mainMod .. " + J",           hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + SHIFT + R",   hl.dsp.exec_cmd("hyprctl reload"))
 hl.bind(mainMod .. " + Escape",      hl.dsp.exec_cmd("wlogout -b 5"))
@@ -109,6 +109,12 @@ hl.bind(mainMod .. " + T",           hl.dsp.exec_cmd("kitty --class tui-modal-la
 hl.bind(mainMod .. " + slash",       hl.dsp.exec_cmd(scriptDir .. "cheatsheet.sh"))
 hl.bind(mainMod .. " + W",           hl.dsp.exec_cmd(scriptDir .. "wall-switch.sh"))
 
+-- Tools & Utilities
+hl.bind(mainMod .. " + C",           hl.dsp.exec_cmd(scriptDir .. "clipboard.sh"))
+hl.bind(mainMod .. " + period",      hl.dsp.exec_cmd("rofimoji"))
+hl.bind(mainMod .. " + F1",          hl.dsp.exec_cmd(scriptDir .. "gamemode.sh"))
+hl.bind(mainMod .. " + ALT + N",     hl.dsp.exec_cmd(scriptDir .. "nightlight.sh"))
+
 -- Screenshots & Screen Recording (ss-toolkit)
 hl.bind("Print",                     hl.dsp.exec_cmd(scriptDir .. "screenshot.sh area"))
 hl.bind(mainMod .. " + SHIFT + S",   hl.dsp.exec_cmd(scriptDir .. "screenshot.sh area"))
@@ -116,6 +122,17 @@ hl.bind("SHIFT + Print",             hl.dsp.exec_cmd(scriptDir .. "screenshot.sh
 hl.bind("CTRL + Print",              hl.dsp.exec_cmd(scriptDir .. "screenshot.sh clip"))
 hl.bind(mainMod .. " + Print",       hl.dsp.exec_cmd(scriptDir .. "screenshot.sh swappy"))
 hl.bind(mainMod .. " + ALT + R",     hl.dsp.exec_cmd(scriptDir .. "screenrecord.sh"))
+
+-- Hardware & Media Keys (Volume, Brightness, Playback)
+hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd("wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"))
+hl.bind("XF86AudioLowerVolume",  hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"))
+hl.bind("XF86AudioMute",         hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
+hl.bind("XF86AudioMicMute",      hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"))
+hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl set +5%"))
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"))
+hl.bind("XF86AudioPlay",         hl.dsp.exec_cmd("playerctl play-pause"))
+hl.bind("XF86AudioNext",         hl.dsp.exec_cmd("playerctl next"))
+hl.bind("XF86AudioPrev",         hl.dsp.exec_cmd("playerctl previous"))
 
 -- Focus movement
 hl.bind(mainMod .. " + left",        hl.dsp.focus({ direction = "left" }))

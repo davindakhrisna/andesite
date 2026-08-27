@@ -56,6 +56,12 @@
     # Shell & Environment
     programs.zsh.enable = true;
     environment.sessionVariables.ZDOTDIR = "$HOME/.config/zsh";
+    programs.git = {
+      enable = true;
+      config = {
+        safe.directory = [ "/home/kryisnn/.config/flint" "*" ];
+      };
+    };
 
     # Network Setup
     networking.networkmanager = {

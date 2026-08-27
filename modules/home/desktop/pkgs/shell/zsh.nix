@@ -147,6 +147,8 @@
           bindkey '^F' _fzf_file_no_hidden
           bindkey '^[[A' history-substring-search-up
           bindkey '^[[B' history-substring-search-down
+          eval "$(${pkgs.zoxide}/bin/zoxide init zsh)"
+          eval "$(${pkgs.starship}/bin/starship init zsh)"
         }
       ''
     ];

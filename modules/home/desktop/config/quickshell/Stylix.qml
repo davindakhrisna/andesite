@@ -24,6 +24,6 @@ QtObject {
     readonly property color base0F: "#f5c2e7" // Pink / Highlight
 
     // Typography Tokens
-    readonly property string fontSans: "Rubik"
-    readonly property string fontMono: "Maple Mono NF"
+    readonly property string fontSans: "Iosevka Nerd Font"
+    readonly property string fontMono: "Iosevka Nerd Font"
 }

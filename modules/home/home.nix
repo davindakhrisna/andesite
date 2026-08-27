@@ -2,6 +2,7 @@
   flake.homeModules.home-manager = {
     config,
     lib,
+    pkgs,
     ...
   }: {
     xdg.enable = true;
@@ -30,7 +31,57 @@
     };
 
     # Relocate .gtkrc-2.0 and .Xresources away from $HOME
-    gtk.gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
+    gtk = {
+      enable = true;
+      theme = {
+        name = "adw-gtk3-dark";
+        package = pkgs.adw-gtk3;
+      };
+      iconTheme = {
+        name = "Papirus-Dark";
+        package = pkgs.papirus-icon-theme;
+      };
+      cursorTheme = {
+        name = "Bibata-Modern-Ice";
+        package = pkgs.bibata-cursors;
+        size = 24;
+      };
+      font = {
+        name = "Iosevka Nerd Font";
+        size = 12;
+      };
+      gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
+      gtk2.force = true;
+    };
+
+    home.pointerCursor = {
+      enable = true;
+      name = "Bibata-Modern-Ice";
+      package = pkgs.bibata-cursors;
+      size = 24;
+      gtk.enable = true;
+      x11.enable = true;
+    };
+
+    dconf.settings = {
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+        gtk-theme = "adw-gtk3-dark";
+        icon-theme = "Papirus-Dark";
+        cursor-theme = "Bibata-Modern-Ice";
+        cursor-size = 24;
+        font-name = "Iosevka Nerd Font 12";
+        document-font-name = "Iosevka Nerd Font 12";
+        monospace-font-name = "Iosevka Nerd Font 12";
+      };
+    };
+
+    qt = {
+      enable = true;
+      platformTheme.name = "gtk3";
+      style.name = "adwaita-dark";
+    };
+
     xresources.path = "${config.xdg.configHome}/X11/Xresources";
 
     # Prevent Home Manager from linking legacy dotfiles directly in $HOME root
@@ -41,8 +92,5 @@
     });
 
     programs.home-manager.enable = true;
-
-    # First-activation takeover: hm refuses to overwrite pre-existing dotfiles.
-    gtk.gtk2.force = true;
   };
 }

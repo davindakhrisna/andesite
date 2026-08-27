@@ -14,7 +14,5 @@
     xdg.configFile."rofi".source =
       config.lib.file.mkOutOfStoreSymlink cfgDir;
 
-    # Disable Stylix's automatic rofi theming so custom theme.rasi is used
-    stylix.targets.rofi.enable = false;
   };
 }

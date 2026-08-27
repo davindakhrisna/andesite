@@ -13,7 +13,5 @@
     xdg.configFile."kitty".source =
       config.lib.file.mkOutOfStoreSymlink cfgDir;
 
-    # Disable Stylix auto-generating kitty colors so custom kitty.conf is used
-    stylix.targets.kitty.enable = false;
   };
 }

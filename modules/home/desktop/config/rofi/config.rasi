@@ -5,7 +5,7 @@ configuration {
     display-run: "RUN ";
     display-window: "WIN ";
     drun-display-format: "{name}";
-    font: "Maple Mono NF 12";
+    font: "Iosevka Nerd Font 12";
 }
 
 @theme "theme.rasi"

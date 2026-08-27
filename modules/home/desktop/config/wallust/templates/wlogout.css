@@ -1,0 +1,25 @@
+* {
+    background-image: none;
+    box-shadow: none;
+    border-radius: 0px !important;
+    font-family: "Iosevka Nerd Font", monospace;
+}
+
+window {
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+button {
+    color: {{foreground}};
+    background-color: {{color0}};
+    border: 2px solid {{color8}};
+    border-radius: 0px !important;
+    margin: 10px;
+    font-size: 14px;
+}
+
+button:focus, button:active, button:hover {
+    background-color: {{color4}};
+    color: {{background}};
+    border-color: {{color4}};
+}
