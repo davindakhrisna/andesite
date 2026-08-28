@@ -1,54 +1,65 @@
 # 🏛️ Module Architecture & Customization
 
 > [!NOTE]
-> Flint utilizes **dendritic modularity** via `flake-parts` and `import-tree`. You never need to write manual module import lists in `flake.nix`.
+> Flint uses **dendritic modularity** via `flake-parts` and `import-tree`. All `.nix` files under `modules/` and `hosts/` are automatically discovered and loaded into the flake outputs—no manual import arrays needed in `flake.nix`.
 
 ---
 
-## 🌳 How It Works
+## 🌳 Dendritic Discovery Model
 
-* Any `.nix` file placed inside `modules/system/` is automatically exported as `self.nixosModules.<filename>`.
-* Any `.nix` file placed inside `modules/home/` is automatically exported as `self.homeModules.<filename>`.
+```
+modules/
+├── system/   ──▶  Exported as self.nixosModules.<module-name>
+└── home/     ──▶  Exported as self.homeModules.<module-name>
+```
+
+- **`self.nixosModules.system`**: Imports all base system modules (`base`, `desktop`, `gaming`, `hardware`, `utils`).
+- **`self.homeModules.<name>`**: Reusable user-space configurations imported inside each host's `home-manager.users.<user>.imports`.
 
 ---
 
-## 📦 Available User Modules
+## 📦 User Module Registry
 
-Enable or disable modules in `home-manager.users.<username>.imports` inside your host's `default.nix`:
+Add or remove modules in `home-manager.users.<username>.imports` inside your host's `default.nix`:
 
 ```nix
-home-manager.users.yourusername = {...}: {
+home-manager.users.kryisnn = {...}: {
   imports = with self.homeModules; [
-    # Core Desktop Modules
-    home-manager
-    desktop         # Hyprland, Waybar, Rofi, Dunst, Wallust
-    shell           # Zsh, Starship, modern CLI tools
-    productivity    # Basalt, Basaltix, Obsidian, FreeCAD
-    extra-pkgs      # Flatpak apps, ancillary utilities
+    # Core User Space
+    home-manager           # GTK/Qt themes, cursor, XDG paths, environment variables
+    desktop                # Hyprland, Waybar, Rofi, Dunst, SwayOSD, Awww
+    shell                  # Zsh (vi-mode), Starship prompt, modern CLI tools
+    productivity           # Basalt notes, Basaltix workspace runner, Obsidian, Sioyek
+    extra-pkgs             # Flatpaks, Winboat, auxiliary desktop tools
 
-    # Developer Modules (Select to your liking)
-    dev             # Go, Node, Python, Docker, Direnv, mkenv
-    dev-nvf         # NVF modular Neovim IDE framework
-    dev-utils       # Agentic AI tools, DB managers, Zed
-    dev-extra       # Game dev, Android SDK, local AI
+    # Development Stack
+    dev                    # Go, Node, Python, Flutter, Docker, Direnv, mkenv
+    dev-nvf                # Modular Neovim IDE framework (NVF)
+    dev-utils              # Zed Editor, DBGate, Bruno, Antigravity IDE, OpenCode
+    dev-extra              # Godot 4, Blender, LibreSprite, uv
 
-    # Entertainment Modules
-    entertainment-social  # Vesktop (Discord), Spotify
-    entertainment-gaming  # Steam, MangoHud, Heroic
+    # Entertainment
+    entertainment-social   # Vesktop (Discord with screenshare), Spotify
+    entertainment-gaming   # MangoHud, Heroic Games Launcher, Gamescope
   ];
 };
 ```
 
 ---
 
+## ➕ Creating a New Module
+
+To add a new capability to Flint:
+
+1. Create `modules/home/<category>/<my-module>.nix` (or `modules/system/<my-module>.nix`):
+   ```nix
+   { self, ... }: {
+     flake.homeModules.my-custom-module = { pkgs, ... }: {
+       home.packages = with pkgs; [ htop btop ];
+     };
+   }
+   ```
+2. Import it anywhere as `self.homeModules.my-custom-module`.
+
 > [!TIP]
-> **Creating a New Module:**
-> Simply create `modules/home/my-module.nix`:
-> ```nix
-> {
->   flake.homeModules.my-module = { pkgs, ... }: {
->     home.packages = with pkgs; [ custom-tool ];
->   };
-> }
-> ```
-> It is immediately importable as `self.homeModules.my-module` across all hosts!
+> `import-tree` discovers nested files automatically. No updates to `flake.nix` are ever required when creating new modules.

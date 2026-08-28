@@ -35,14 +35,14 @@ else
     hyprctl eval 'hl.config({
         animations = { enabled = true },
         decoration = {
-            blur = { enabled = true, size = 5, passes = 2, new_optimizations = true, xray = true },
+            blur = { enabled = true, size = 5, passes = 2, new_optimizations = true, xray = false },
             shadow = { enabled = false },
             rounding = 0
         },
         general = {
             gaps_in = 12,
-            gaps_out = 18,
-            border_size = 3
+            gaps_out = 32,
+            border_size = 1
         }
     })' > /dev/null 2>&1
 

@@ -1,4 +1,6 @@
-# Generated dynamically by Wallust for Dunst
+# ==============================================================================
+# OLED Monochrome Configuration for Dunst
+# ==============================================================================
 [global]
     font = Iosevka Nerd Font 11
     markup = full
@@ -39,8 +41,8 @@
     horizontal_padding = 16
     text_icon_padding = 12
     frame_width = 2
-    frame_color = "#7D7D7D"
-    separator_color = "#7D7D7D"
+    frame_color = "#ffffff"
+    separator_color = "#262626"
 
     ### Icons ###
     enable_recursive_icon_lookup = true
@@ -59,24 +61,24 @@
     class = Dunst
 
 [urgency_low]
-    background = "#121212"
-    foreground = "#F8F8F8"
-    frame_color = "#A6A6A6"
-    highlight = "#7D7D7D"
+    background = "#000000"
+    foreground = "#a3a3a3"
+    frame_color = "#262626"
+    highlight = "#ffffff"
     timeout = 4
 
 [urgency_normal]
-    background = "#121212"
-    foreground = "#F8F8F8"
-    frame_color = "#7D7D7D"
-    highlight = "#7D7D7D"
+    background = "#000000"
+    foreground = "#ffffff"
+    frame_color = "#ffffff"
+    highlight = "#ffffff"
     timeout = 6
 
 [urgency_critical]
-    background = "#121212"
-    foreground = "#F8F8F8"
-    frame_color = "#464646"
-    highlight = "#464646"
+    background = "#000000"
+    foreground = "#ffffff"
+    frame_color = "#ef4444"
+    highlight = "#ef4444"
     timeout = 0
 
 ### Custom Rules ###
@@ -84,23 +86,23 @@
 [gamemode_enabled]
     appname = "Game Mode"
     summary = "*ENABLED*"
-    frame_color = "#595959"
+    frame_color = "#22c55e"
     timeout = 3
 
 [gamemode_disabled]
     appname = "Game Mode"
     summary = "*DISABLED*"
-    frame_color = "#7D7D7D"
+    frame_color = "#ffffff"
     timeout = 3
 
 [nightlight_on]
     appname = "Night Light"
     summary = "*Activated*"
-    frame_color = "#767676"
+    frame_color = "#eab308"
     timeout = 3
 
 [nightlight_off]
     appname = "Night Light"
     summary = "*Deactivated*"
-    frame_color = "#7D7D7D"
+    frame_color = "#ffffff"
     timeout = 3

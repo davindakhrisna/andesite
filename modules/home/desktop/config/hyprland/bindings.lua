@@ -20,9 +20,8 @@ hl.bind(mainMod .. " + Space",  hl.dsp.exec_cmd("rofi -show drun -show-icons")) 
 hl.bind(mainMod .. " + comma",      hl.dsp.exec_cmd(scriptDir .. "clipboard.sh"))               -- Clipboard History (Cliphist + Rofi)
 hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("rofimoji --action copy"))                  -- Emoji & Glyph Picker (Rofimoji)
 hl.bind(mainMod .. " + Escape",    hl.dsp.exec_cmd(scriptDir .. "powermenu.sh"))            -- Power Menu (Rofi TUI Modal)
-hl.bind(mainMod .. " + SHIFT+ T",         hl.dsp.exec_cmd(scriptDir .. "wallpaper-switcher.sh"))   -- Wallpaper Switcher (Awww + Rofi Visual Grid)
+hl.bind(mainMod .. " + T",         hl.dsp.exec_cmd(scriptDir .. "wallpaper-switcher.sh"))   -- Wallpaper Switcher (Awww + Rofi Visual Grid)
 hl.bind(mainMod .. " + A",         hl.dsp.exec_cmd(scriptDir .. "animation-switcher.sh"))   -- Animation Preset Switcher (Rofi)
-hl.bind(mainMod .. " + T",         hl.dsp.exec_cmd(scriptDir .. "theme-switcher.sh"))       -- Theme Mode Switcher (Rofi Light/Dark Mode)
 hl.bind(mainMod .. " + slash",     hl.dsp.exec_cmd(scriptDir .. "keybindings-cheatsheet.sh")) -- Keybindings Cheatsheet (Rofi / TUI)
 hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("kitty --class tui-modal -e flint-pkgs")) -- Packages & Modules Explorer (Flint-Pkgs TUI Modal)
 
@@ -37,16 +36,18 @@ hl.bind(mainMod .. " + G",        hl.dsp.exec_cmd(scriptDir .. "gamemode.sh"))  
 
 hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd(scriptDir .. "screenshot.sh region"))    -- Region / Area screenshot 
 hl.bind(mainMod .. " + Print",     hl.dsp.exec_cmd(scriptDir .. "screenshot.sh full"))      -- Fullscreen screenshot
-hl.bind("ALT + Print",             hl.dsp.exec_cmd(scriptDir .. "screenshot.sh window"))    -- Active Window screenshot
 
 ----------------------------------------
 -- Window Layout & Floating
 ----------------------------------------
 
 hl.bind(mainMod .. " + Q",      hl.dsp.window.close())                                      -- Close active app / window
-hl.bind(mainMod .. " + SHIFT + W", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + W", function()                                                        -- Toggle Floating Window (Compact & Centered)
+    hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
+    hl.dispatch(hl.dsp.window.resize({ x = 960, y = 600, exact = true }))
+    hl.dispatch(hl.dsp.window.center())
+end)
 hl.bind(mainMod .. " + F",             hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + W",             hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + SHIFT + L",             hl.dsp.layout("togglesplit"))
 
 ----------------------------------------
@@ -96,16 +97,16 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 ----------------------------------------
 
 -- Audio Volume (Output)
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("swayosd-client --output-volume raise"), { locked = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("swayosd-client --output-volume lower"), { locked = true })
-hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("swayosd-client --output-volume mute-toggle"), { locked = true })
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(scriptDir .. "osd.sh volume_up"),   { ["repeat"] = true, locked = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(scriptDir .. "osd.sh volume_down"), { ["repeat"] = true, locked = true })
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd(scriptDir .. "osd.sh volume_mute"), { locked = true })
 
 -- Audio Mic (Input)
-hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("swayosd-client --input-volume mute-toggle"), { locked = true })
+hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd(scriptDir .. "osd.sh mic_mute"),    { locked = true })
 
 -- Brightness (Backlight)
-hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("swayosd-client --brightness raise"), { locked = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("swayosd-client --brightness lower"), { locked = true })
+hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd(scriptDir .. "osd.sh brightness_up"),   { ["repeat"] = true, locked = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(scriptDir .. "osd.sh brightness_down"), { ["repeat"] = true, locked = true })
 
 -- Media Playback Controls (Playerctl)
 hl.bind("XF86AudioPlay",        hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
@@ -120,6 +121,6 @@ hl.bind("XF86AudioPrev",        hl.dsp.exec_cmd("playerctl previous"),   { locke
 hl.bind(mainMod .. " + SHIFT + B",  hl.dsp.exec_cmd("helium"))  
 hl.bind(mainMod .. " + SHIFT + M",  hl.dsp.exec_cmd("spotify"))
 hl.bind(mainMod .. " + SHIFT + N",  hl.dsp.exec_cmd("kitty -e nvim"))
-hl.bind(mainMod .. " + SHIFT + E",  hl.dsp.exec_cmd("kitty -e yazi"))
+hl.bind(mainMod .. " + E",  hl.dsp.exec_cmd("kitty -e yazi"))
 hl.bind(mainMod .. " + SHIFT + O",  hl.dsp.exec_cmd("obsidian"))
 hl.bind(mainMod .. " + SHIFT + D",  hl.dsp.exec_cmd("vesktop"))

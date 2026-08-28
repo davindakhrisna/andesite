@@ -11,7 +11,6 @@
     home.packages = with pkgs;
     [
       # shells
-      btop
       yazi
 
       # password manager & launchers
@@ -58,14 +57,11 @@
       gsettings-desktop-schemas
     ];
 
-    # Wallust & Rofi Config Symlinks
-    xdg.configFile."wallust".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/flint/modules/home/desktop/config/wallust";
+    # Rofi, Yazi & GTK Config Symlinks
     xdg.configFile."rofi".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/flint/modules/home/desktop/config/rofi";
-
-    services.kanshi = {
-      enable = true;
-      systemdTarget = "graphical-session.target";
-    };
+    xdg.configFile."yazi/theme.toml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/flint/modules/home/desktop/config/yazi/theme.toml";
+    xdg.configFile."gtk-3.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/flint/modules/home/desktop/config/gtk/gtk.css";
+    xdg.configFile."gtk-4.0/gtk.css".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/flint/modules/home/desktop/config/gtk/gtk.css";
 
     systemd.user.services.polkit-gnome-authentication-agent-1 = {
       Unit = {
@@ -142,6 +138,15 @@
       };
     };
 
+    programs.btop = {
+      enable = true;
+      settings = {
+        color_theme = "TTY";
+        theme_background = false;
+        vim_keys = true;
+      };
+    };
+
     programs.kitty = {
       enable = true;
       shellIntegration.enableZshIntegration = true;
@@ -156,10 +161,34 @@
         background_opacity = "0.85";
         confirm_os_window_close = 0;
         enable_audio_bell = false;
+
+        # OLED Monochrome Palette
+        background = "#000000";
+        foreground = "#f5f5f5";
+        cursor = "#ffffff";
+        cursor_text_color = "#000000";
+        selection_background = "#ffffff";
+        selection_foreground = "#000000";
+
+        # 16 ANSI Palette (Monochrome with functional accents)
+        color0 = "#1a1a1a";
+        color1 = "#ef4444";
+        color2 = "#22c55e";
+        color3 = "#eab308";
+        color4 = "#ffffff";
+        color5 = "#d4d4d4";
+        color6 = "#a3a3a3";
+        color7 = "#f5f5f5";
+
+        color8 = "#525252";
+        color9 = "#f87171";
+        color10 = "#4ade80";
+        color11 = "#facc15";
+        color12 = "#ffffff";
+        color13 = "#e5e5e5";
+        color14 = "#d4d4d4";
+        color15 = "#ffffff";
       };
-      extraConfig = ''
-        include ${config.home.homeDirectory}/.cache/wallust/colors-kitty.conf
-      '';
     };
   };
 }

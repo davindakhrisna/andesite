@@ -121,7 +121,6 @@ while i < len(lines):
             else: desc = "Take Screenshot"
         elif "wallpaper-switcher.sh" in raw_act: desc = "Wallpaper Switcher (Awww + Rofi)"
         elif "animation-switcher.sh" in raw_act: desc = "Animation Physics Switcher (Rofi)"
-        elif "theme-switcher.sh" in raw_act: desc = "Theme Mode Switcher (Rofi)"
         elif "powermenu.sh" in raw_act: desc = "Session Power Menu (Lock/Shutdown)"
         elif "nightlight.sh" in raw_act: desc = "Night Light Toggle (Hyprsunset)"
         elif "gamemode.sh" in raw_act: desc = "Game Mode Toggle (Max FPS)"

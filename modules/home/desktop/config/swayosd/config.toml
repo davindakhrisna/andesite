@@ -1,0 +1,9 @@
+# ==============================================================================
+# SwayOSD Configuration (Minimal OLED Monochrome)
+# ==============================================================================
+
+[server]
+show_percentage = true
+min_brightness = 1
+max_volume = 100
+top_margin = 0.90

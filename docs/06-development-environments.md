@@ -1,54 +1,63 @@
 # 💻 Development Environments & Tooling
 
 > [!NOTE]
-> Flint includes `mkenv` and `nix-direnv` for instant, zero-friction isolated development shells.
+> Flint provides per-project hermetic development environments using `nix-direnv` and the `mkenv` template bootstrapper.
 
 ---
 
-## ⚡ Instant Nix-Direnv Bootstrapper (`mkenv`)
+## ⚡ Instant Environment Bootstrapper (`mkenv`)
 
-Inside any project directory, initialize an isolated dev environment:
+Initialize a reproducible Nix development shell in any directory:
 
 ```bash
-# Available presets: go, rust, ts, python, zig, flutter, c, nix, minimal
+# Syntax: mkenv <preset>
 mkenv go
+mkenv rust
+mkenv ts
+mkenv python
+mkenv flutter
+mkenv zig
+mkenv c
+mkenv nix
 ```
 
-### What `mkenv` Does:
-1. Generates a standalone `flake.nix` with preconfigured toolchains and LSP packages.
-2. Creates `.envrc` and automatically executes `direnv allow`.
-3. Sets up `.gitignore` for direnv and nix caches.
+### What `mkenv` Generates:
+1. `flake.nix`: Declares exact compiler versions, build tools, and LSPs for the chosen stack.
+2. `.envrc`: Configured with `use flake` for `direnv`.
+3. `.gitignore`: Ignores `.direnv` and build artifacts.
+4. Automatically runs `direnv allow` to activate the environment immediately.
 
 > [!TIP]
-> Whenever you `cd` into the project directory, all compilers, runtimes, and LSPs load automatically into your shell and Neovim/Zed.
+> Whenever you `cd` into the project directory, all compilers, runtimes, and language servers load automatically into your shell and Neovim/Zed sessions.
 
 ---
 
-## 🛠️ Integrated Tooling & Aliases
+## 🛠️ Modern CLI Aliases & Replacements
 
-| Tool / Alias | Base Command | Description |
-| :--- | :--- | :--- |
-| `z <dir>` | `cd` | Fast directory jumping with frecency (zoxide) |
-| `eza` | `ls` | Modern file listing with icons and Git status |
-| `bat` | `cat` | Syntax-highlighted file viewing |
-| `duf` | `df` | Intuitive disk usage analysis |
-| `rg` | `grep` | Blazing fast recursive search (ripgrep) |
-| `fd` | `find` | User-friendly file search |
-| `lg` | `lazygit` | Terminal UI for Git |
-| `ld` | `lazydocker` | Terminal UI for Docker containers |
-| `nv` | `nvim` | Modular Neovim (NVF framework) |
+| Modern Tool | Replaced Command | Alias / Command | Benefit |
+| :--- | :--- | :--- | :--- |
+| **`eza`** | `ls` | `tree` (`eza --tree`) | Icons, Git status, file permissions color coding |
+| **`bat`** | `cat` | `cat` (with hint) / `bat` | Syntax highlighting and line numbers |
+| **`ripgrep`** | `grep` | `rg` | Blazing-fast recursive directory search |
+| **`fd`** | `find` | `fd` | Intuitive syntax, respects `.gitignore` |
+| **`duf`** | `df` | `duf` | Clean visual terminal disk usage tables |
+| **`zoxide`** | `cd` | `z <path>` | Smart directory jumping based on frecency |
+| **`lazygit`** | `git` | `g` | Interactive full-featured Git TUI |
+| **`lazydocker`** | `docker` | `lazydocker` | Container, image, and volume monitoring TUI |
 
 ---
 
-## 📱 Mobile Development & Waydroid
+## 📱 Mobile Development & Android / Waydroid
+
+Flint includes preconfigured Android tools and system-level Waydroid integration:
 
 ```bash
-# Initialize Waydroid container with Google Play Services
+# Initialize Waydroid with Google Apps support
 sudo waydroid init -s GAPPS
 
-# Start Android container service
+# Start the Waydroid container service
 sudo systemctl start waydroid-container
 
-# Launch Android UI window
+# Launch Android window in Hyprland
 waydroid show-full-ui
 ```

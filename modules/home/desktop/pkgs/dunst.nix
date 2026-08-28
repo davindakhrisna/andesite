@@ -10,9 +10,5 @@
       enable = true;
       configFile = "${cfgDir}/dunstrc";
     };
-
-    home.packages = [
-      pkgs.libnotify
-    ];
   };
 }

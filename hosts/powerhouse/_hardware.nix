@@ -20,6 +20,7 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/29540d14-8554-4252-9dcc-9b661691617f";
     fsType = "btrfs";
+    options = ["noatime" "compress=zstd" "discard=async" "space_cache=v2"];
   };
 
   fileSystems."/boot" = {

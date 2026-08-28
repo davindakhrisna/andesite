@@ -1,11 +1,11 @@
 # 🚀 Getting Started & Installation
 
 > [!NOTE]
-> Flint is designed for quick replication across multiple machines using the `hosts/template` blueprint.
+> Flint uses a **dendritic multi-host structure** powered by `flake-parts` and `import-tree`. Adding a new machine takes under 2 minutes using the `hosts/template` blueprint.
 
 ---
 
-## ⚡ Quick TL;DR Setup
+## ⚡ Quick Setup & Replication
 
 ### 1. Clone Configuration
 ```bash
@@ -13,33 +13,39 @@ git clone https://github.com/davindakhrisna/flint.git ~/.config/flint
 cd ~/.config/flint
 ```
 
-### 2. Generate Hardware Config
+### 2. Generate Hardware Scan
 ```bash
 # Create directory for your host
-mkdir -p hosts/my-laptop
+mkdir -p hosts/<my-hostname>
 
-# Dump active hardware configuration
-nixos-generate-config --show-hardware-config > hosts/my-laptop/_hardware.nix
+# Dump current system hardware configuration
+nixos-generate-config --show-hardware-config > hosts/<my-hostname>/_hardware.nix
 ```
 
-### 3. Duplicate & Edit Host Template
+> [!TIP]
+> If using **Btrfs**, add performance mount options to `hosts/<my-hostname>/_hardware.nix`:
+> ```nix
+> fileSystems."/".options = [ "noatime" "compress=zstd" "discard=async" "space_cache=v2" ];
+> ```
+
+### 3. Copy & Configure Host Blueprint
 ```bash
-cp hosts/template/default.nix hosts/my-laptop/default.nix
+cp hosts/template/default.nix hosts/<my-hostname>/default.nix
 ```
 
 > [!IMPORTANT]
-> Edit `hosts/my-laptop/default.nix` and update all lines marked with `# CHANGEME`:
-> - `networking.hostName = "my-laptop";`
-> - `users.users.<yourusername>` & `home-manager.users.<yourusername>`
-> - `programs.nh.flake = "/home/<yourusername>/.config/flint";`
-> - `var.cpu` and `var.gpu` (see [Hardware Guide](02-hardware-configuration.md))
+> Edit `hosts/<my-hostname>/default.nix` and set your machine parameters:
+> - `networking.hostName = "<my-hostname>";`
+> - `users.users.<username>` & `home-manager.users.<username>`
+> - `programs.nh.flake = "/home/<username>/.config/flint";`
+> - `var.cpu` ("intel" | "amd") and `var.gpu` ("nvidia" | "amd" | "intel")
 
 ### 4. Build & Apply
 ```bash
-# First-time rebuild
-sudo nixos-rebuild switch --flake .#my-laptop
+# First-time build & switch
+sudo nixos-rebuild switch --flake .#<my-hostname>
 
-# Subsequent updates (using nh helper)
+# Subsequent rebuilds with nh helper
 nh os switch
 # (or short alias)
 nos
@@ -49,10 +55,16 @@ nos
 
 ## 🔄 Daily Workflow Commands
 
-| Command | Alias | Description |
+| Command | Alias | Action |
 | :--- | :--- | :--- |
-| `nh os switch` | `nos` | Build and switch system configuration |
-| `nh os test` | `not` | Test configuration without adding boot entry |
-| `nh clean all` | - | Garbage collect old Nix generations & save disk space |
-| `nix flake check --no-build` | `ncheck` | Validate flake evaluation and syntax |
-| `nix flake update` | `nup` | Update all flake lock inputs |
+| `nh os switch` | `nos` | Build and activate system configuration |
+| `nh os test` | `not` | Test configuration in memory without adding a boot entry |
+| `nh os boot` | `nob` | Build configuration and add to bootloader menu without switching immediately |
+| `nh clean all` | `nclean` | Remove obsolete Nix generations & reclaim disk space |
+| `nix flake check --no-build` | `ncheck` | Validate flake syntax and module evaluation |
+| `nix flake update` | `nup` | Update `flake.lock` dependencies |
+
+---
+
+> [!TIP]
+> Keep your config directory clean by running `ncheck` before applying changes with `nos`.

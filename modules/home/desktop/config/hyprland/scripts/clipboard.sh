@@ -3,13 +3,6 @@
 # Export PATH with system and profile fallbacks
 export PATH="/run/current-system/sw/bin:/etc/profiles/per-user/$USER/bin:$HOME/.nix-profile/bin:$PATH"
 
-# Ensure cliphist background watchers are running
-if ! pgrep -fa "wl-paste.*cliphist store" > /dev/null; then
-    wl-paste --watch cliphist store &
-    wl-paste --type image --watch cliphist store &
-    sleep 0.1
-fi
-
 ACTION="${1:-select}"
 
 case "$ACTION" in

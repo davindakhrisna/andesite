@@ -1,52 +1,67 @@
-@import "colors-swayosd.css";
+/* ==============================================================================
+ * Ultra-Minimal OLED Monochrome Configuration for SwayOSD
+ * Strict Brutalist Square (0-radius corners, 1px crisp border, True Black)
+ * ============================================================================== */
 
-window {
-    background-color: @background;
-    background: @background;
-    border: 2px solid @accent;
+@define-color background #000000;
+@define-color foreground #ffffff;
+@define-color accent #ffffff;
+@define-color trough #1c1c1c;
+
+window#osd,
+window#osd * {
     border-radius: 0px;
-    padding: 12px 18px;
     font-family: "Iosevka Nerd Font", monospace;
 }
 
-#container {
-    margin: 4px;
-}
-
-progressbar:disabled,
-image:disabled {
-    opacity: 0.5;
-}
-
-progressbar {
-    min-height: 8px;
+window#osd {
+    background: #000000;
+    background-color: #000000;
+    border: 1px solid #ffffff;
     border-radius: 0px;
-    background-color: @trough;
-    background: @trough;
+    padding: 4px 10px;
+    margin: 0px;
 }
 
-trough {
-    min-height: 8px;
-    border-radius: 0px;
-    border: none;
-    background-color: @trough;
-    background: @trough;
+window#osd image {
+    display: none;
+    -gtk-icon-size: 0px;
+    min-width: 0px;
+    min-height: 0px;
+    margin: 0px;
+    padding: 0px;
 }
 
-progress {
-    min-height: 8px;
-    border-radius: 0px;
-    border: none;
-    background-color: @accent;
-    background: @accent;
-}
-
-label {
-    font-size: 14px;
+window#osd label {
+    color: #ffffff;
+    font-size: 11px;
     font-weight: bold;
-    color: @foreground;
+    font-family: "Iosevka Nerd Font", monospace;
+    margin-right: 8px;
+    margin-left: 0px;
 }
 
-image {
-    color: @foreground;
+window#osd progressbar {
+    min-width: 120px;
+    min-height: 4px;
+    border-radius: 0px;
+    background: transparent;
+    border: none;
+    margin: 2px 0px;
+}
+
+window#osd trough {
+    min-height: 4px;
+    border-radius: 0px;
+    border: none;
+    background-color: #1c1c1c;
+    background: #1c1c1c;
+}
+
+window#osd progress {
+    min-height: 4px;
+    border-radius: 0px;
+    border: none;
+    background-color: #ffffff;
+    background: #ffffff;
 }

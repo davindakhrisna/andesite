@@ -58,8 +58,7 @@ EOF
 declare -A APP_NAMES=(
     ["pomo"]="Pomo - Pomodoro Focus Timer & Task Tracker"
     ["hackernews_tui"]="HackerNews TUI - Y Combinator News Reader"
-    ["gazelle-tui"]="Gazelle - NetworkManager WiFi Manager"
-    ["pi-coding-agent"]="Pi Agent - AI Assistant for Feedback Loop"
+    ["pi"]="Pi Agent - AI Assistant for Feedback Loop"
 )
 
 # List Available Apps

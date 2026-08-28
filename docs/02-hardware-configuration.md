@@ -1,48 +1,60 @@
 # ⚙️ Hardware Configuration
 
 > [!NOTE]
-> Flint abstracts CPU microcode and GPU drivers into a clean `var` option matrix in your host's `default.nix`.
+> Flint abstracts CPU microcode and GPU drivers into a centralized `var` option matrix in each host's `default.nix`.
 
 ---
 
 ## 🖥️ Configuration Matrix
 
-In your `hosts/<hostname>/default.nix`:
+In `hosts/<hostname>/default.nix`:
 
 ```nix
 var = {
-  cpu = "intel";          # "intel" | "amd" | null
-  gpu = "nvidia";         # "nvidia" | "amd" | "intel" | null
-  nvidia.mode = "desktop"; # "desktop" | "offload" | "sync"
-  # nvidia.intelBusId = "PCI:0:2:0";  # Required for laptop PRIME
-  # nvidia.nvidiaBusId = "PCI:1:0:0"; # Required for laptop PRIME
+  cpu = "intel";           # "intel" | "amd" | null
+  gpu = "nvidia";          # "nvidia" | "amd" | "intel" | null
+  nvidia.mode = "desktop";  # "desktop" | "offload" | "sync"
+
+  # Optional for hybrid laptop PRIME:
+  # nvidia.intelBusId  = "PCI:0:2:0";
+  # nvidia.nvidiaBusId = "PCI:1:0:0";
 };
 ```
 
 ---
 
-## 🎛️ Option Presets
+## 🎛️ Hardware Presets
 
-### 1. CPU Presets
-* **`cpu = "intel";`**: Enables `updateMicrocode` and `thermald` daemon.
-* **`cpu = "amd";`**: Enables AMD CPU microcode updates.
+### 1. CPU Configuration
 
-### 2. GPU Presets
-
-| GPU Setup | Configuration | Description |
+| CPU Type | Option | Enabled Subsystems |
 | :--- | :--- | :--- |
-| **Nvidia Desktop** | `gpu = "nvidia"; nvidia.mode = "desktop";` | Dedicated GPU, Wayland hardware acceleration, and power management. |
-| **Nvidia Hybrid Laptop (On-Demand)** | `gpu = "nvidia"; nvidia.mode = "offload";` | Powers down Nvidia GPU when idle; run apps via `nvidia-offload <app>`. |
-| **Nvidia Hybrid Laptop (Always On)** | `gpu = "nvidia"; nvidia.mode = "sync";` | Always routes display through Nvidia GPU for max performance. |
-| **AMD Radeon GPU** | `gpu = "amd";` | Enables `amdgpu` driver and Vulkan/RADV acceleration. |
-| **Intel Arc / iGPU** | `gpu = "intel";` | Enables Intel media drivers and VA-API hardware acceleration. |
+| **Intel** | `cpu = "intel";` | Microcode updates (`hardware.cpu.intel.updateMicrocode`), thermal daemon (`services.thermald`) |
+| **AMD** | `cpu = "amd";` | Microcode updates (`hardware.cpu.amd.updateMicrocode`) |
 
 ---
 
+### 2. GPU Configuration
+
+| GPU Setup | Configuration | Details |
+| :--- | :--- | :--- |
+| **Nvidia Desktop** | `gpu = "nvidia";`<br>`nvidia.mode = "desktop";` | Dedicated GPU mode, modesetting, `nvidia-vaapi-driver` for HW video decoding, power management. |
+| **Nvidia Hybrid (On-Demand)** | `gpu = "nvidia";`<br>`nvidia.mode = "offload";` | Powers down Nvidia GPU when idle. Run GPU-bound apps via `nvidia-offload <app>`. |
+| **Nvidia Hybrid (Always-On)** | `gpu = "nvidia";`<br>`nvidia.mode = "sync";` | Keeps Nvidia GPU active full-time for maximum framerate stability. |
+| **AMD Radeon** | `gpu = "amd";` | Kernel `amdgpu` driver with Vulkan/RADV, VA-API (`vaapiVdpau`), and VDPAU. |
+| **Intel Iris / Arc** | `gpu = "intel";` | Intel media driver stack and VA-API hardware decoding. |
+
+---
+
+## 🔍 Laptop PRIME Setup
+
 > [!TIP]
-> **Finding Laptop PCI Bus IDs:**
-> Run `lspci | grep -E "VGA|3D"` to find your bus IDs:
+> **Find Your PCI Bus IDs:**
+> Run `lspci | grep -E "VGA|3D"` in your terminal:
+> ```bash
+> 00:02.0 VGA compatible controller: Intel Corporation ...  -> "PCI:0:2:0"
+> 01:00.0 3D controller: NVIDIA Corporation ...             -> "PCI:1:0:0"
 > ```
-> 00:02.0 VGA compatible controller: Intel Corporation ... -> "PCI:0:2:0"
-> 01:00.0 3D controller: NVIDIA Corporation ...            -> "PCI:1:0:0"
-> ```
+
+> [!IMPORTANT]
+> For hybrid laptops, ensure `intelBusId` and `nvidiaBusId` match the format `PCI:X:Y:Z` (e.g. `00:02.0` becomes `PCI:0:2:0`).

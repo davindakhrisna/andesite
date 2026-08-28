@@ -65,21 +65,30 @@
             };
           };
 
-          # Dynamic Wallust Palette Loader
-          luaConfigRC.wallust = ''
-            local wallust_colors = vim.fn.expand("~/.cache/wallust/colors-neovim.lua")
-            if vim.fn.filereadable(wallust_colors) == 1 then
-                local ok, palette = pcall(dofile, wallust_colors)
-                if ok and type(palette) == "table" then
-                    pcall(function()
-                        local mini_base16 = require('mini.base16')
-                        mini_base16.setup({
-                            palette = palette,
-                            use_icons = true,
-                        })
-                    end)
-                end
-            end
+          # Static OLED Monochrome Palette
+          luaConfigRC.theme = ''
+            local mini_base16 = require('mini.base16')
+            mini_base16.setup({
+              palette = {
+                base00 = '#000000', -- Default Background (True OLED Black)
+                base01 = '#121212', -- Lighter Background (Statusline/Sidebar)
+                base02 = '#262626', -- Selection Background
+                base03 = '#737373', -- Comments & Line Numbers (Crisp Silver Grey)
+                base04 = '#a3a3a3', -- Dark Foreground (Status bar elements)
+                base05 = '#f5f5f5', -- Default Foreground (Crisp White Text)
+                base06 = '#ffffff', -- Light Foreground
+                base07 = '#ffffff', -- Lightest Accent
+                base08 = '#ef4444', -- Variables & Errors (Red)
+                base09 = '#f97316', -- Constants & Numbers (Orange)
+                base0A = '#eab308', -- Classes & Types (Amber/Yellow)
+                base0B = '#22c55e', -- Strings (Green)
+                base0C = '#06b6d4', -- Regex & Special (Cyan)
+                base0D = '#38bdf8', -- Functions & Methods (Sky/Blue)
+                base0E = '#c084fc', -- Keywords & Storage (Purple/Magenta)
+                base0F = '#e4e4e7', -- Delimiters & Accents (Silver)
+              },
+              use_icons = true,
+            })
           '';
 
           # Tabline / Bufferline

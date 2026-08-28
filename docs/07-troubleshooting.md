@@ -1,46 +1,70 @@
 # 🔧 Troubleshooting & FAQ
 
 > [!NOTE]
-> Quick answers and terminal one-liners for common desktop scenarios.
+> Solutions and diagnostic one-liners for common desktop, display, audio, and performance scenarios.
 
 ---
 
-## ❓ Frequently Asked Questions
+## ❓ Frequently Encountered Scenarios
 
-### 1. `nh os switch` reports missing flake path
-Ensure `NH_FLAKE` or `programs.nh.flake` is set:
+### 1. Hyprland Stuttering or Frame Drops
+If experiencing frame pacing issues or stutter:
+1. **Disable Blur X-Ray**: Ensure `xray = false` in `hyprland.lua` (xray performs an expensive extra compositing pass).
+2. **Set Inactive Opacity to 1.0**: Setting `inactive_opacity = 1.0` avoids running blur passes on background windows.
+3. **Verify VA-API Hardware Video Acceleration**: Run `vainfo` to confirm `nvidia-vaapi-driver` is handling video decoding.
+4. **Use Game Mode**: Press `SUPER + G` to instantly disable all animations, blur, and decorative gaps.
+
+> [!TIP]
+> Ensure your Btrfs root filesystem uses `noatime,compress=zstd,discard=async` mount options in `_hardware.nix` and reboot to apply.
+
+---
+
+### 2. Multi-Monitor Display Arrangement
+If monitors are misaligned or a new display was connected:
 ```bash
-# Explicit path switch
-nh os switch ~/.config/flint
+# Trigger the interactive layout selector (Extend Right/Left, Mirror, External Only)
+auto-monitor.sh
+```
+Or launch the monitor layout TUI:
+```bash
+hyprmon
 ```
 
-### 2. Git reports "dubious ownership in repository"
-Git requires marking the config directory as safe:
-```bash
-git config --global --add safe.directory ~/.config/flint
-```
+---
 
-### 3. Display / Multi-Monitor Not Arranged Properly
-Run the interactive monitor detection wizard:
+### 3. Audio Output or Microphone Device Selection
+PipeWire and WirePlumber manage audio routing. If sound is routed to the wrong device:
 ```bash
-~/.config/flint/modules/home/desktop/config/hyprland/scripts/auto-monitor.sh
-```
-Or edit display rules in `~/.config/flint/modules/home/desktop/config/hyprland/hyprland.lua`.
-
-### 4. Audio output or microphone not detected
-Use the TUI audio mixer:
-```bash
-# Launch wiremix modal
+# Launch PipeWire interactive mixer
 wiremix
 ```
+Or toggle mute directly:
+- **Audio Output**: `SUPER + bindings` or `XF86AudioMute`
+- **Microphone Input**: `XF86AudioMicMute`
+
+---
+
+### 4. Force Reloading GTK Applications
+To apply modified `gtk.css` rules (`border-radius: 0 !important` or color overrides):
+```bash
+# Restart running GTK application (e.g. Thunar)
+pkill -x thunar && thunar &
+```
+
+---
 
 ### 5. Cleaning Disk Space & Old Nix Generations
 ```bash
-# Delete all non-current Nix generations
+# Remove all old system & user generations, keeping only the 3 most recent
 nh clean all --keep 3
 ```
 
 ---
 
-> [!TIP]
-> To test configuration changes without creating a GRUB/systemd-boot entry, use `nh os test` (or `not`).
+### 6. Testing Changes Safely Before Booting
+```bash
+# Test changes in memory without creating a bootloader entry
+nh os test
+# (or short alias)
+not
+```

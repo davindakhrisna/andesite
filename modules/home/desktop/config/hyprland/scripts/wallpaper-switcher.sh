@@ -135,7 +135,7 @@ fi
 
 if [ -n "$selected_path" ] && [ -f "$selected_path" ]; then
     # Cache selected wallpaper path
-    mkdir -p "${HOME}/.cache/wallust"
+    mkdir -p "${HOME}/.cache"
     echo "$selected_path" > "${HOME}/.cache/flint-wallpaper"
 
     # Ensure awww daemon is running
@@ -144,33 +144,8 @@ if [ -n "$selected_path" ] && [ -f "$selected_path" ]; then
         sleep 0.3
     fi
 
-    # Set wallpaper using awww
+    # Set wallpaper using awww (Instant & Smooth)
     awww img "$selected_path" --transition-type any --transition-step 90 || awww "$selected_path"
-
-    # Generate color scheme with wallust using current mode
-    THEME_MODE="dark16"
-    if [ -f "${HOME}/.cache/flint-theme-mode" ]; then
-        THEME_MODE=$(cat "${HOME}/.cache/flint-theme-mode")
-    fi
-
-    if command -v wallust >/dev/null 2>&1; then
-        WALLUST_CONF="${FLINT_DIR}/modules/home/desktop/config/wallust/wallust.toml"
-        if [ -f "$WALLUST_CONF" ]; then
-            wallust run -C "$WALLUST_CONF" -p "$THEME_MODE" "$selected_path"
-        else
-            wallust run -p "$THEME_MODE" "$selected_path"
-        fi
-    fi
-
-    # Reload all desktop daemons
-    pkill -SIGUSR2 waybar 2>/dev/null || true
-    if command -v dunstctl >/dev/null 2>&1; then
-        dunstctl reload 2>/dev/null || true
-    fi
-    if command -v hyprctl >/dev/null 2>&1; then
-        hyprctl reload 2>/dev/null || true
-    fi
-    pkill -SIGUSR2 swayosd-server 2>/dev/null || true
 
     notify-send -u low -i preferences-desktop-theme \
         "Wallpaper Switcher" "Applied: <b>$(basename "$selected_path")</b>" 2>/dev/null || true

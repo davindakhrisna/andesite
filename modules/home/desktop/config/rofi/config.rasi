@@ -1,9 +1,7 @@
 /* ==============================================================================
- * Flint Rofi Base Configuration (100% Dynamic Wallust Theming)
+ * Flint Rofi Base Configuration (OLED Monochrome)
  * Strict TUI Aesthetic: 0-radius corners, 2px borders, clean contrast
  * ============================================================================== */
-
-@import "colors-rofi.rasi"
 
 configuration {
     modi: "drun,run,filebrowser,window";
@@ -18,6 +16,20 @@ configuration {
 }
 
 * {
+    /* Static OLED Monochrome Palette */
+    background: #000000;
+    background-alt: #141414;
+    foreground: #ffffff;
+    primary: #ffffff;
+    secondary: #a3a3a3;
+    accent: #d4d4d4;
+    alert: #ef4444;
+    border-col: #262626;
+    selected: #ffffff;
+    selected-fg: #000000;
+    active: #ffffff;
+    urgent: #ef4444;
+
     background-color: transparent;
     text-color: @foreground;
     margin: 0px;

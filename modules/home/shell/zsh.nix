@@ -5,13 +5,6 @@
     config,
     ...
   }: {
-    home.packages = with pkgs; [
-      bat
-      ripgrep
-      eza
-      duf
-      fd
-    ];
 
     home.sessionVariables = {
       COLORTERM = "truecolor";
@@ -138,8 +131,12 @@
           }
         '')
         ''
-          # Source Wallust Dynamic Colors for FZF & Shell
-          [[ -f "$HOME/.cache/wallust/colors-fzf.zsh" ]] && source "$HOME/.cache/wallust/colors-fzf.zsh"
+          # Static OLED Monochrome Colors for FZF & Shell
+          export FZF_DEFAULT_OPTS=" \
+          --color=bg+:#1a1a1a,bg:#000000,spinner:#ffffff,hl:#ef4444 \
+          --color=fg:#f5f5f5,header:#ffffff,info:#ffffff,pointer:#ffffff \
+          --color=marker:#22c55e,fg+:#ffffff,prompt:#ffffff,hl+:#f87171 \
+          --height 45% --layout=reverse --border --inline-info"
 
           # Modern CLI Tool Reminders
           unalias cd cat ls df grep find 2>/dev/null || true

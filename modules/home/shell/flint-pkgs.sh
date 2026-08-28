@@ -32,7 +32,6 @@ PACKAGES_DATA=(
     "desktop|satty|satty|1|Modern screenshot annotation suite and image editor|Annotation tool for adding arrows, text, highlights, crops, and blur to screenshots."
     "desktop|cliphist|cliphist|1|Wayland clipboard history manager|Captures text and image clipboard entries. Integrated with Rofi (SUPER+V)."
     "desktop|rofimoji|rofimoji|1|Emoji, math, and unicode glyph picker for Rofi|Interactive emoji and unicode character picker with clipboard copy (SUPER+.)."
-    "desktop|wallust|wallust|1|Dynamic colors generator and theming engine from wallpapers|Extracts color schemes from wallpapers and dynamically templates Hyprland, Waybar, Dunst, etc."
     "desktop|awww|awww|1|High-performance Wayland wallpaper daemon with animated transitions|Smooth wallpaper display daemon supporting transitions and multi-monitor setups."
 
     # --- PRODUCTIVITY MODULE ---

@@ -1,51 +1,55 @@
 # 📦 Package & Module Discovery
 
 > [!NOTE]
-> After installing Flint, you can instantly explore all installed tools and available modules using the interactive `flint-pkgs` package explorer.
+> Flint includes interactive discovery tools (`flint-pkgs` and `ns`) to explore installed tools, search Nixpkgs, and inspect module composition.
 
 ---
 
-## ⚡ Quick Explorer (`flint-pkgs`)
+## ⚡ Interactive Package Explorer (`flint-pkgs`)
 
-Launch the interactive package explorer anytime using **`SUPER + Shift + P`** or via the CLI:
+Launch the package explorer with **`SUPER + P`** or via terminal:
 
-### 1. View Currently Installed Packages (Host Profile)
-Filter packages specifically active on your host (e.g., `powerhouse`):
 ```bash
+# Browse packages installed on current host
 flint-pkgs --installed
-```
 
-### 2. View All Available Packages in Repository
-Browse all curated tools across all modules with real-time documentation & purpose preview:
-```bash
+# Browse all curated tools across all modules in the repository
 flint-pkgs --all
 ```
 
----
-
-## 🧭 How to Use the Interactive TUI
-
-* **`Type to Search`**: Fuzzy search by package name, binary command, or module.
-* **`Arrow Keys` / `Ctrl+j/k`**: Navigate the list; the right-hand preview pane automatically renders the package summary, module classification, and usage notes.
-* **`Enter`**: View detailed package documentation.
-* **`Escape` / `q`**: Exit the explorer.
+### Keybindings in `flint-pkgs`:
+- **`Type to Filter`**: Instant fuzzy search across package names, binaries, and module tags.
+- **`Up / Down` (`Ctrl+j / Ctrl+k`)**: Navigate list with real-time summary preview on the right pane.
+- **`Enter`**: View detailed package documentation.
+- **`Esc / q`**: Exit.
 
 ---
 
-## 📚 Module Breakdown Overview
+## 📚 Module Package Breakdown
 
 | Module | Category | Primary Included Packages |
 | :--- | :--- | :--- |
-| **`desktop`** | Window Manager & UI | `hyprland`, `waybar`, `rofi`, `dunst`, `swayosd`, `wallust`, `satty`, `cliphist` |
-| **`shell`** | CLI Tools & Terminal | `zsh`, `starship`, `eza`, `bat`, `duf`, `ripgrep`, `fd`, `zoxide`, `fzf` |
-| **`dev`** | Core Development | `go`, `nodejs`, `python3`, `docker`, `direnv`, `mkenv`, `git`, `gh` |
-| **`dev-nvf`** | Neovim IDE | `nvf` with LSP, Treesitter, mini-statusline, Wallust base16 integration |
-| **`dev-utils`** | AI & Utilities | `zed-editor`, `lazygit`, `lazydocker`, `dbeaver-bin` |
-| **`productivity`** | Notes & Viewers | `basalt`, `basaltix`, `obsidian`, `sioyek`, `freecad` |
-| **`entertainment`** | Social & Gaming | `vesktop`, `spotify`, `steam`, `mangohud`, `heroic` |
+| **`desktop`** | Window Manager & UI | `hyprland`, `waybar`, `rofi`, `dunst`, `swayosd`, `awww`, `satty`, `cliphist`, `wiremix`, `bluetui`, `gazelle-tui`, `hyprmon`, `hyprsunset` |
+| **`shell`** | CLI Tools & Terminal | `zsh`, `starship`, `eza`, `bat`, `duf`, `ripgrep`, `fd`, `zoxide`, `fzf`, `fastfetch`, `areofyl-fetch`, `playerctl`, `brightnessctl`, `yt-dlp` |
+| **`dev`** | Core Development | `go`, `nodejs`, `pnpm`, `python3`, `flutter`, `android-tools`, `docker`, `direnv`, `mkenv`, `git`, `gh`, `lazygit`, `lazydocker`, `jq` |
+| **`dev-nvf`** | Neovim IDE | `nvf` (LSP, Treesitter, mini.statusline, Telescope, Neo-tree, Trouble, Flash, Gitsigns) |
+| **`dev-utils`** | AI & GUI Editors | `zed-editor`, `dbgate`, `bruno`, `google-antigravity-ide`, `opencode` |
+| **`dev-extra`** | Game Dev & Local AI | `godot_4`, `blender`, `libresprite`, `uv` |
+| **`productivity`** | Notes & Viewers | `basalt`, `basaltix`, `pomo`, `hackernews-tui`, `pi-coding-agent`, `obsidian`, `xournalpp`, `onlyoffice-desktopeditors`, `sioyek`, `freecad` |
+| **`entertainment`** | Social & Gaming | `vesktop`, `spotify`, `steam`, `mangohud`, `protonup-qt`, `heroic`, `gamescope` |
+| **`extra-pkgs`** | Flatpak & Aux | Flatpak service (`OBS Studio`, `Sober`), `winboat` |
 
 ---
 
+## 🔍 Searching for New Packages (`ns`)
+
+```bash
+# Instant interactive TUI search across 100,000+ Nixpkgs packages
+ns <search-term>
+```
+
 > [!TIP]
-> **Locating New Binaries:**
-> Run `nix-locate bin/<command>` or `nix-index` to find which Nix package provides any missing binary.
+> To find which Nix package provides a specific terminal binary, use:
+> ```bash
+> nix-locate bin/<command>
+> ```

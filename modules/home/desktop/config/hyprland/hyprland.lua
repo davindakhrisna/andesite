@@ -33,15 +33,15 @@ hl.config({
     general = {
         gaps_in = 12,
         gaps_out = 18,
-        border_size = 3,
+        border_size = 1,
         layout = "dwindle",
         allow_tearing = false,
         col = {
             active_border = {
-                colors = { "rgb(89b4fa)", "rgb(94e2d5)" },
+                colors = { "rgb(ffffff)", "rgb(737373)" },
                 angle = 45,
             },
-            inactive_border = "rgb(313244)",
+            inactive_border = "rgb(1f1f1f)",
         },
     },
     cursor = {
@@ -57,7 +57,7 @@ hl.config({
             size = 5,
             passes = 2,
             new_optimizations = true,
-            xray = true,
+            xray = false,
         },
         shadow = {
             enabled = false,
@@ -95,7 +95,7 @@ hl.window_rule({
         class = "tui-modal",
     },
     float = true,
-    size = "760 460",
+    size = "760 760",
     center = true,
 })
 
@@ -155,8 +155,6 @@ hl.on("hyprland.start", function()
     hl.dsp.exec_cmd("waybar")
     hl.dsp.exec_cmd("hypridle")
     hl.dsp.exec_cmd("awww-daemon")
-    hl.dsp.exec_cmd("dunst")
-    hl.dsp.exec_cmd("swayosd-server")
 
     -- Wipe clipboard history on fresh boot/session for privacy
     hl.dsp.exec_cmd("cliphist wipe")
@@ -165,12 +163,6 @@ hl.on("hyprland.start", function()
     hl.dsp.exec_cmd("wl-paste --watch cliphist store")
     hl.dsp.exec_cmd("wl-paste --type image --watch cliphist store")
 
-    -- Polkit authentication agent
-    hl.dsp.exec_cmd("/run/current-system/sw/libexec/polkit-gnome-authentication-agent-1")
-
-    -- System Event Notifier (Network, Bluetooth, Battery)
-    hl.dsp.exec_cmd("system-notifier.sh")
-
     -- Auto Monitor Detection & Layout Confirmation
     hl.dsp.exec_cmd("auto-monitor.sh")
 
@@ -178,15 +170,9 @@ hl.on("hyprland.start", function()
     hl.dsp.exec_cmd("hyprctl setcursor Bibata-Modern-Classic 24")
 end)
 
----------------------
----- MODULES --------
----------------------
-
+-- Modules
 require("animations")
 require("bindings")
-
--- Dynamic Wallust Active/Inactive Border Colors
-pcall(dofile, os.getenv("HOME") .. "/.cache/wallust/colors.lua")
 
 -- Force Cursor Theme on Reload
 hl.dsp.exec_cmd("hyprctl setcursor Bibata-Modern-Classic 24")

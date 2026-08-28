@@ -9,13 +9,7 @@
     ./pkgs/swayosd.nix
   ];
 
-  flake.homeModules.desktop = {
-    lib,
-    pkgs,
-    inputs,
-    config,
-    ...
-  }: {
+  flake.homeModules.desktop = {...}: {
     imports = with self.homeModules; [
       desktop-hyprland
       desktop-waybar

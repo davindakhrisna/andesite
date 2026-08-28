@@ -54,7 +54,12 @@
       # GPU: Nvidia
       (lib.mkIf (cfg.gpu == "nvidia") {
         services.xserver.videoDrivers = ["nvidia"];
-        hardware.graphics.enable = true;
+        hardware.graphics = {
+          enable = true;
+          extraPackages = with pkgs; [
+            nvidia-vaapi-driver
+          ];
+        };
         hardware.nvidia = {
           open = false;
           modesetting.enable = true;

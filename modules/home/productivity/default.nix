@@ -8,6 +8,7 @@
       basalt          # Primary Note taker
       hackernews-tui  # Y Combinator news reader
       pomo            # Pomodoro focus timer
+      pi-coding-agent # AI Assistant
     ];
 
     # Custom Multi-TUI Workspace Runner

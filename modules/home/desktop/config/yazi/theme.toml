@@ -1,0 +1,57 @@
+# ==============================================================================
+# OLED Monochrome Theme for Yazi File Manager
+# ==============================================================================
+
+[manager]
+cwd = { fg = "#ffffff", bold = true }
+hovered = { fg = "#000000", bg = "#ffffff", bold = true }
+preview_hovered = { underline = true }
+find_keyword = { fg = "#eab308", bold = true, italic = true }
+find_position = { fg = "#ffffff", italic = true }
+marker_selected = { fg = "#22c55e", bg = "#22c55e" }
+marker_copied = { fg = "#eab308", bg = "#eab308" }
+marker_cut = { fg = "#ef4444", bg = "#ef4444" }
+tab_active = { fg = "#000000", bg = "#ffffff", bold = true }
+tab_inactive = { fg = "#a3a3a3", bg = "#141414" }
+border_symbol = "│"
+border_style = { fg = "#262626" }
+
+[status]
+separator_open = ""
+separator_close = ""
+separator_style = { fg = "#141414", bg = "#141414" }
+mode_normal = { fg = "#000000", bg = "#ffffff", bold = true }
+mode_select = { fg = "#000000", bg = "#22c55e", bold = true }
+mode_unset = { fg = "#000000", bg = "#ef4444", bold = true }
+progress_label = { fg = "#ffffff", bold = true }
+progress_normal = { fg = "#ffffff", bg = "#141414" }
+progress_error = { fg = "#ef4444", bg = "#141414" }
+permissions_t = { fg = "#ffffff" }
+permissions_r = { fg = "#eab308" }
+permissions_w = { fg = "#ef4444" }
+permissions_x = { fg = "#22c55e" }
+permissions_s = { fg = "#525252" }
+
+[input]
+border = { fg = "#ffffff" }
+title = {}
+value = {}
+selected = { reversed = true }
+
+[select]
+border = { fg = "#ffffff" }
+active = { fg = "#ffffff" }
+inactive = {}
+
+[tasks]
+border = { fg = "#ffffff" }
+title = {}
+hovered = { underline = true }
+
+[which]
+mask = { bg = "#000000" }
+cand = { fg = "#ffffff" }
+rest = { fg = "#737373" }
+desc = { fg = "#f5f5f5" }
+separator = "  "
+separator_style = { fg = "#525252" }

@@ -1,96 +1,94 @@
-# Flint
+<div align="center">
 
-> Multi-host NixOS & Home Manager configuration with a clean dendritic architecture powered by `flake-parts` and `import-tree`.
+<img src=".github/logo.png" alt="Flint Logo" width="220" />
 
----
+### *Minimalist. Brutalist. Ultra-Responsive.*
+A bespoke, dendritic **NixOS & Home Manager** workstation configured for extreme focus, zero latency, and pure OLED monochrome aesthetics.
 
-## 🏛️ Architecture Overview
-
-Flint is organized into modular layers where modules are automatically discovered and imported by `import-tree`:
-
-```
-.
-├── flake.nix                  # Flake inputs, flake-parts orchestration, and module exports
-├── hosts/                     # Host-specific configurations and hardware definitions
-│   ├── powerhouse/            # Main workstation (Intel CPU + Nvidia GPU, Btrfs)
-│   └── template/              # Boilerplate configuration for new machines
-└── modules/                   # Reusable system and user modules
-    ├── system/                # NixOS system-level modules (`flake.nixosModules`)
-    │   ├── base.nix           # Kernel hardening, audio (PipeWire), Docker, Nix settings
-    │   ├── desktop.nix        # Hyprland (UWSM), Ly display manager, fonts
-    │   ├── gaming.nix         # Steam, GameMode, Gamescope
-    │   ├── hardware.nix       # CPU/GPU options (`intel`, `amd`, `nvidia`)
-    │   └── utils.nix          # System packages, nh helper, Chromium fallback
-    └── home/                  # Home Manager user modules (`flake.homeModules`)
-        ├── home.nix           # GTK, Qt, Bibata cursor, XDG paths, environment variables
-        ├── desktop/           # Hyprland (Lua), Waybar, Dunst, Rofi, Wallust, SwayOSD
-        ├── shell/             # Zsh (vi-mode, completions, aliases), Starship, modern CLI tools
-        ├── dev/               # Development languages, tooling, NVF (Neovim), Zed, AI tools
-        ├── entertainment/     # Social (Vesktop, Spotify) and Gaming (MangoHud, Heroic)
-        ├── productivity/      # GUI & TUI tools (Basalt, Basaltix, Obsidian, FreeCAD, Sioyek)
-        └── extra/             # Flatpaks and auxiliary applications
-```
+[![NixOS](https://img.shields.io/badge/NixOS-Unstable-5277C3?style=for-the-badge&logo=nixos&logoColor=white)](https://nixos.org)
+[![Hyprland](https://img.shields.io/badge/Hyprland-Wayland-00A98F?style=for-the-badge&logo=wayland&logoColor=white)](https://hyprland.org)
+[![Lua](https://img.shields.io/badge/Config-Lua-2C2D72?style=for-the-badge&logo=lua&logoColor=white)](https://lua.org)
+[![License](https://img.shields.io/badge/License-MIT-white?style=for-the-badge&color=000000)](LICENSE)
 
 ---
 
-## 🚀 Key Features
+<p align="center">
+  <img src=".github/1.png" alt="Flint Desktop Preview" width="95%" />
+</p>
 
-- **Dendritic Modularity**: Zero manual import lists in `flake.nix`—every module under `modules/` and `hosts/` is auto-imported via `import-tree`.
-- **100% Dynamic Theming (Wallust Engine)**: Wallpaper-extracted color schemes dynamically theme Hyprland, Waybar, Dunst, Rofi, Kitty, GTK 3/4, Neovim (`mini.base16`), Btop, Yazi, Cava, and Hyprlock.
-- **Theme Mode & Animation Physics Switcher**: Switch between Dark, Light, Soft Dark, and OLED Hard Dark (`SUPER + T`) and 5 animation physics presets (`SUPER + A`).
-- **Interactive Cheatsheets**: Instant keybindings discovery (`SUPER + /` or `SUPER + F2`) and package/module explorer (`flint-pkgs` / `SUPER + Shift + P`).
-- **Instant Nix-Direnv Bootstrapper (`mkenv`)**: Generate `flake.nix` and `.envrc` for Go, Rust, TypeScript, Python, C/C++, Flutter, Nix, and Zig in 1 second.
-- **Multi-TUI Workspace Runner (`basaltix`)**: Multi-pane terminal workflow featuring Basalt notes on the primary pane and companion productivity tools on the side.
-- **Auto Display Detection**: Listens for hotplug events on Hyprland's socket and prompts layout options (`Extend Right/Left`, `Mirror`, `External Only`).
-- **Strict TUI Geometry**: Consistent 0-radius sharp brutalist aesthetic across all windows, bars, notifications, OSD HUDs, and modals.
-- **Curated Development Stack**: Go, Node, Python, Flutter, Android SDK, Docker, Direnv, Lazygit, Lazydocker, Zed, and NVF Neovim.
+<p align="center">
+  <img src=".github/2.png" alt="Terminal & TUI Workspace" width="47%" />
+  <img src=".github/3.png" alt="Interactive Modals & Rofi" width="47%" />
+</p>
+
+</div>
 
 ---
 
-## 🛠️ Usage
+## ✨ Highlights
 
-### Quick Commands & Management (`nh`)
+- 🖤 **OLED Monochrome**: Pitch black and Square geometry, gives you focused workspace
+- 🎮 **Interactive TUIs**: Live wallpaper picker (`SUPER + T`), physics switcher (`SUPER + A`), `basaltix` notes dashboard, and `flint-pkgs` explorer (`SUPER + P`).
+- 🛠️ **Hermetic Dev Shells (`mkenv`)**: Instant 1-second isolated Nix environments for Go, Rust, TS, Python, Flutter, Zig, C, and Nix.
+
+---
+
+## ⚡ Quick Start
+
 ```bash
-# Apply configuration and switch system
+# 1. Clone to user configuration
+git clone https://github.com/davindakhrisna/flint.git ~/.config/flint
+
+# 2. Build & activate with NixOS Helper (nh)
 nh os switch
 # (or short alias)
 nos
-
-# Test configuration without adding boot entry
-nh os test
-# (or short alias)
-not
-
-# Check flake evaluation
-nix flake check ~/.config/flint --no-build
-```
-
-### Cheatsheets & Exploration
-```bash
-# Explore installed packages on powerhouse
-flint-pkgs --installed
-
-# Explore all available packages across the repository
-flint-pkgs --all
-
-# Bootstrap a development environment
-mkenv go
-mkenv rust
-mkenv ts
-mkenv python
 ```
 
 ---
 
-## 📖 Documentation Index
+## ⌨️ Daily Driver Shortcuts
 
-For in-depth guides and detailed configuration notes, explore the `docs/` directory:
+| Shortcut | Command / Action | Description |
+| :--- | :--- | :--- |
+| `SUPER + Return` | `kitty` | Launch terminal emulator |
+| `SUPER + Space` | `rofi -show drun` | Application launcher |
+| `SUPER + ,` | `clipboard.sh` | Fuzzy clipboard manager (`cliphist`) |
+| `SUPER + .` | `rofimoji` | Emoji & Unicode glyph picker |
+| `SUPER + E` | `kitty -e yazi` | Modern TUI file manager |
+| `SUPER + Shift + P` | `screenshot.sh` | Region screenshot & annotation (`satty`) |
+| `SUPER + G` | `gamemode.sh` | Instant game mode toggle (disable effects) |
+| `SUPER + N` | `nightlight.sh` | Warm color temperature toggle (`hyprsunset`) |
+| `SUPER + Escape` | `powermenu.sh` | Session power menu (Lock/Reboot/Poweroff) |
 
-1. [🚀 Getting Started & Installation](docs/01-getting-started.md)
-2. [⚙️ Hardware Configuration (CPU/GPU)](docs/02-hardware-configuration.md)
-3. [🏛️ Module Architecture & Customization](docs/03-module-architecture.md)
-4. [🎨 Dynamic Theming & Wallust Engine](docs/04-theming-and-wallust.md)
-5. [📦 Package & Module Discovery](docs/05-packages-and-modules.md)
-6. [💻 Development Environments & Tooling](docs/06-development-environments.md)
-7. [🔧 Troubleshooting & FAQ](docs/07-troubleshooting.md)
+---
+
+## 📖 Deep-Dive Documentation
+
+Everything you need to customize, scale, and master Flint:
+
+- [🚀 **01. Getting Started & Installation**](docs/01-getting-started.md) — Host setup, Btrfs options, and daily commands.
+- [⚙️ **02. Hardware Configuration**](docs/02-hardware-configuration.md) — CPU microcode, Nvidia PRIME hybrid setup, and GPU matrix.
+- [🏛️ **03. Module Architecture**](docs/03-module-architecture.md) — Dendritic auto-discovery and adding custom modules.
+- [🖤 **04. OLED Monochrome Theming**](docs/04-theming-and-design-system.md) — Color tokens, geometry rules, and switchers.
+- [📦 **05. Packages & Discovery**](docs/05-packages-and-modules.md) — Interactive explorer and complete package registry.
+- [💻 **06. Development Environments**](docs/06-development-environments.md) — `mkenv` dev shells, CLI replacements, and Android/Waydroid.
+- [🔧 **07. Troubleshooting & FAQ**](docs/07-troubleshooting.md) — Performance checklist, multi-monitor, and audio routing.
+
+## 🚧 Work in Progress
+> [!WARNING]
+> Flint is actively maintained and continuously being refined:
+> - **Stuttering & frame pacing** diagnostics under various workloads.
+> - **Unseen edge-case bugs** across differing hardware profiles.
+> 
+> If you encounter any issues or glitches, please [submit an issue](https://github.com/davindakhrisna/flint/issues)!
+---
+## 💖 Credits & Acknowledgments
+- **[HANCORE-linux](https://github.com/HANCORE-linux)** — For the awesome Waybar layout and styling inspiration used in Flint.
+
+---
+
+<div align="center">
+  <sub>Crafted with precision for pure terminal flow. Built on <a href="https://nixos.org">NixOS</a> & <a href="https://hyprland.org">Hyprland</a>.</sub>
+</div>
 

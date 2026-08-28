@@ -1,17 +1,27 @@
-@import "../../.cache/wallust/colors-waybar.css";
-
+/* Static OLED Monochrome Palette */
+@define-color background #000000;
+@define-color background-alt #141414;
+@define-color foreground #ffffff;
+@define-color primary #ffffff;
+@define-color secondary #a3a3a3;
+@define-color accent #d4d4d4;
+@define-color alert #ef4444;
+@define-color warning #eab308;
+@define-color success #22c55e;
 @define-color transparent rgba(0, 0, 0, 0);
 
 * {
-  border: none;
+  border: 0;
   padding: 0px;
-  min-height: 0;
+  min-height: 28px;
   font-family: 'Iosevka Nerd Font', 'JetBrainsMono Nerd Font';
   font-weight: normal;
 }
 
 #waybar > .horizontal {
-  padding-top: 1.5px;
+  border-left: 2px solid rgba(255, 255, 255, 0.745);
+  border-right: 2px solid rgba(255, 255, 255, 0.745);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.745);
 }
 
 window#waybar {
@@ -81,7 +91,7 @@ window#waybar {
 }
 
 #workspaces button.active {
-  color: @foreground;
+  color: @primary;
   opacity: 1.0;
   padding: 0 2px;
   font-size: 14px;
@@ -94,7 +104,7 @@ window#waybar {
 
 #workspaces button.empty.active {
   font-size: 15px;
-  color: @foreground;
+  color: @primary;
   opacity: 1.0;
 }
 
@@ -172,13 +182,13 @@ tooltip label {
 
 /* Battery States & Animations */
 #battery.warning {
-  color: #c95d0f;
+  color: @warning;
   background-color: @background;
 }
 
 #battery.critical:not(.charging) {
   background-color: transparent;
-  color: #e6d8ba;
+  color: @foreground;
   animation-name: blink2;
   animation-duration: 0.5s;
   animation-timing-function: steps(12);
@@ -189,6 +199,6 @@ tooltip label {
 @keyframes blink2 {
   to {
     background-color: transparent;
-    color: #f53c3c;
+    color: @alert;
   }
 }
