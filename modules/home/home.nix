@@ -9,6 +9,8 @@
     home.stateVersion = "26.05";
     home.sessionVariables = {
       EDITOR = "nvim";
+      FLINT_DIR = "${config.home.homeDirectory}/.config/flint";
+      NH_FLAKE = "${config.home.homeDirectory}/.config/flint";
 
       # NVIDIA & OpenGL cache
       CUDA_CACHE_PATH = "$HOME/.cache/nv";
@@ -40,7 +42,7 @@
         package = pkgs.papirus-icon-theme;
       };
       cursorTheme = {
-        name = "Bibata-Modern-Ice";
+        name = "Bibata-Modern-Classic";
         package = pkgs.bibata-cursors;
         size = 24;
       };
@@ -54,11 +56,12 @@
 
     home.pointerCursor = {
       enable = true;
-      name = "Bibata-Modern-Ice";
+      name = "Bibata-Modern-Classic";
       package = pkgs.bibata-cursors;
       size = 24;
       gtk.enable = true;
       x11.enable = true;
+      hyprcursor.enable = true;
     };
 
     dconf.settings = {
@@ -66,7 +69,7 @@
         color-scheme = "prefer-dark";
         gtk-theme = "adw-gtk3-dark";
         icon-theme = "Papirus-Dark";
-        cursor-theme = "Bibata-Modern-Ice";
+        cursor-theme = "Bibata-Modern-Classic";
         cursor-size = 24;
         font-name = "Iosevka Nerd Font 12";
         document-font-name = "Iosevka Nerd Font 12";

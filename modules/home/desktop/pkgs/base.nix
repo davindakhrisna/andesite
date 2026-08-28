@@ -10,9 +10,7 @@
 
     home.packages = with pkgs;
     [
-      # terminal & shells
-      foot
-      kitty
+      # shells
       btop
       yazi
 
@@ -39,6 +37,7 @@
       hyprmon      # Hyprland Monitor layout & settings TUI
       wlr-randr    # Wayland xrandr equivalent (query & set displays)
       hyprsunset   # Blue-light filter & color temperature utility
+      socat        # UNIX socket listener for Hyprland events
 
       # Toolkit Screenshot
       grim         # Wayland screenshot tool
@@ -51,7 +50,17 @@
       cliphist
       rofimoji
       polkit_gnome
+
+      # Themes, Icons & Cursors
+      bibata-cursors
+      papirus-icon-theme
+      adw-gtk3
+      gsettings-desktop-schemas
     ];
+
+    # Wallust & Rofi Config Symlinks
+    xdg.configFile."wallust".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/flint/modules/home/desktop/config/wallust";
+    xdg.configFile."rofi".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/flint/modules/home/desktop/config/rofi";
 
     services.kanshi = {
       enable = true;
@@ -74,6 +83,23 @@
         Restart = "on-failure";
         RestartSec = 1;
         TimeoutStopSec = 10;
+      };
+    };
+
+    systemd.user.services.system-notifier = {
+      Unit = {
+        Description = "Desktop System Event Notifier (Network, Bluetooth, Battery)";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
+      Service = {
+        Type = "simple";
+        ExecStart = "${config.home.homeDirectory}/.config/flint/modules/home/desktop/config/hyprland/scripts/system-notifier.sh";
+        Restart = "always";
+        RestartSec = 3;
       };
     };
 
@@ -114,6 +140,26 @@
           "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
         ];
       };
+    };
+
+    programs.kitty = {
+      enable = true;
+      shellIntegration.enableZshIntegration = true;
+      settings = {
+        shell = "zsh";
+        font_family = "Iosevka Nerd Font";
+        bold_font = "auto";
+        italic_font = "auto";
+        bold_italic_font = "auto";
+        font_size = "12.0";
+        window_padding_width = 12;
+        background_opacity = "0.85";
+        confirm_os_window_close = 0;
+        enable_audio_bell = false;
+      };
+      extraConfig = ''
+        include ${config.home.homeDirectory}/.cache/wallust/colors-kitty.conf
+      '';
     };
   };
 }

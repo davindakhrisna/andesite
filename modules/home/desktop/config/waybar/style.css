@@ -1,12 +1,12 @@
-@define-color background #f8f9fb;
-@define-color foreground #111111;
+@import "../../.cache/wallust/colors-waybar.css";
+
 @define-color transparent rgba(0, 0, 0, 0);
 
 * {
   border: none;
   padding: 0px;
   min-height: 0;
-  font-family: 'JetBrainsMono Nerd Font';
+  font-family: 'Iosevka Nerd Font', 'JetBrainsMono Nerd Font';
   font-weight: normal;
 }
 

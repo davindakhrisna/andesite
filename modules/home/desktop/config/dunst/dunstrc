@@ -1,3 +1,4 @@
+# Generated dynamically by Wallust for Dunst
 [global]
     font = Iosevka Nerd Font 11
     markup = full
@@ -29,7 +30,7 @@
     progress_bar_max_width = 300
     progress_bar_corner_radius = 0
 
-    ### Visual Style (No Rounding / Sharp Box) ###
+    ### Visual Style (Strict Square / No Rounding) ###
     corner_radius = 0
     transparency = 0
     gap_size = 10
@@ -38,8 +39,8 @@
     horizontal_padding = 16
     text_icon_padding = 12
     frame_width = 2
-    frame_color = "#8e94a8"
-    separator_color = "#8e94a8"
+    frame_color = "#7D7D7D"
+    separator_color = "#7D7D7D"
 
     ### Icons ###
     enable_recursive_icon_lookup = true
@@ -58,21 +59,24 @@
     class = Dunst
 
 [urgency_low]
-    background = "#181825"
-    foreground = "#cdd6f4"
-    frame_color = "#45475a"
+    background = "#121212"
+    foreground = "#F8F8F8"
+    frame_color = "#A6A6A6"
+    highlight = "#7D7D7D"
     timeout = 4
 
 [urgency_normal]
-    background = "#181825"
-    foreground = "#cdd6f4"
-    frame_color = "#8e94a8"
+    background = "#121212"
+    foreground = "#F8F8F8"
+    frame_color = "#7D7D7D"
+    highlight = "#7D7D7D"
     timeout = 6
 
 [urgency_critical]
-    background = "#181825"
-    foreground = "#f38ba8"
-    frame_color = "#f38ba8"
+    background = "#121212"
+    foreground = "#F8F8F8"
+    frame_color = "#464646"
+    highlight = "#464646"
     timeout = 0
 
 ### Custom Rules ###
@@ -80,23 +84,23 @@
 [gamemode_enabled]
     appname = "Game Mode"
     summary = "*ENABLED*"
-    frame_color = "#a6e3a1"
+    frame_color = "#595959"
     timeout = 3
 
 [gamemode_disabled]
     appname = "Game Mode"
     summary = "*DISABLED*"
-    frame_color = "#8e94a8"
+    frame_color = "#7D7D7D"
     timeout = 3
 
 [nightlight_on]
     appname = "Night Light"
     summary = "*Activated*"
-    frame_color = "#fab387"
+    frame_color = "#767676"
     timeout = 3
 
 [nightlight_off]
     appname = "Night Light"
     summary = "*Deactivated*"
-    frame_color = "#8e94a8"
+    frame_color = "#7D7D7D"
     timeout = 3

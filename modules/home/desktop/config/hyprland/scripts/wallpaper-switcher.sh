@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-# Export PATH with system profiles and nix store fallbacks
-export PATH="/nix/store/q9bi7cj4j1g8mgh36ykx3l9mki390wbc-awww-0.12.1/bin:/nix/store/7p2j2336adkny7irak2ki7l9jlywhf19-wallust-3.5.2/bin:/run/current-system/sw/bin:/etc/profiles/per-user/$USER/bin:$HOME/.nix-profile/bin:$PATH"
+# Export PATH with system profiles and user binaries
+export PATH="/run/current-system/sw/bin:/etc/profiles/per-user/$USER/bin:$HOME/.nix-profile/bin:$PATH"
 
 # Wallpaper Directories
-WALLPAPER_DIR="${HOME}/.config/flint/wallpapers"
+FLINT_DIR="${FLINT_DIR:-${HOME}/.config/flint}"
+WALLPAPER_DIR="${FLINT_DIR}/wallpapers"
 FALLBACK_DIR="${HOME}/Pictures/Wallpapers"
 
 mkdir -p "$WALLPAPER_DIR"
@@ -32,33 +33,39 @@ generate_entries() {
 # Launch Rofi grid with thumbnail preview
 selected=$(generate_entries | rofi -dmenu \
     -p "Wallpaper" \
-    -mesg "Select wallpaper to apply" \
     -show-icons \
     -theme-str '
-    * {
-        font: "Iosevka Nerd Font 12";
-    }
     window {
         location: center;
         anchor: center;
-        width: 780px;
+        width: 820px;
         border: 2px solid;
-        padding: 12px;
+        border-color: @border-col;
+        border-radius: 0px;
+        background-color: @background;
+        padding: 16px;
     }
     mainbox {
-        spacing: 8px;
-        children: [ inputbar, listview, message ];
+        spacing: 12px;
+        children: [ inputbar, message, listview ];
     }
     inputbar {
         padding: 8px 12px;
+        background-color: @background-alt;
+        border: 1px solid;
+        border-color: @border-col;
+        border-radius: 0px;
         children: [ prompt, entry ];
     }
     prompt {
         font: "Iosevka Nerd Font Bold 12";
+        text-color: @primary;
         margin: 0px 8px 0px 0px;
     }
     entry {
+        text-color: @foreground;
         placeholder: "Type to filter...";
+        placeholder-color: @border-col;
     }
     listview {
         lines: 2;
@@ -71,22 +78,33 @@ selected=$(generate_entries | rofi -dmenu \
     }
     element {
         orientation: vertical;
-        padding: 8px;
-        spacing: 6px;
+        padding: 10px;
+        spacing: 8px;
+        border-radius: 0px;
+        background-color: transparent;
+        text-color: @foreground;
+    }
+    element selected {
+        background-color: @selected;
+        text-color: @selected-fg;
     }
     element-icon {
         size: 5.5em;
         horizontal-align: 0.5;
-        vertical-align: 0.5;
     }
     element-text {
         horizontal-align: 0.5;
-        vertical-align: 0.5;
+        text-color: inherit;
     }
     message {
         padding: 6px 12px;
+        background-color: @background-alt;
+        border: 1px solid;
+        border-color: @border-col;
+        border-radius: 0px;
     }
     textbox {
+        text-color: @foreground;
         horizontal-align: 0.5;
         font: "Iosevka Nerd Font 10";
     }
@@ -116,6 +134,10 @@ if [ -z "$selected_path" ]; then
 fi
 
 if [ -n "$selected_path" ] && [ -f "$selected_path" ]; then
+    # Cache selected wallpaper path
+    mkdir -p "${HOME}/.cache/wallust"
+    echo "$selected_path" > "${HOME}/.cache/flint-wallpaper"
+
     # Ensure awww daemon is running
     if ! pgrep -f "awww-daemon" > /dev/null; then
         awww-daemon &
@@ -125,10 +147,31 @@ if [ -n "$selected_path" ] && [ -f "$selected_path" ]; then
     # Set wallpaper using awww
     awww img "$selected_path" --transition-type any --transition-step 90 || awww "$selected_path"
 
-    # Generate color scheme with wallust
-    if command -v wallust >/dev/null 2>&1; then
-        wallust run "$selected_path"
+    # Generate color scheme with wallust using current mode
+    THEME_MODE="dark16"
+    if [ -f "${HOME}/.cache/flint-theme-mode" ]; then
+        THEME_MODE=$(cat "${HOME}/.cache/flint-theme-mode")
     fi
 
-    notify-send "Wallpaper Switcher" "Applied: $(basename "$selected_path")" 2>/dev/null || true
+    if command -v wallust >/dev/null 2>&1; then
+        WALLUST_CONF="${FLINT_DIR}/modules/home/desktop/config/wallust/wallust.toml"
+        if [ -f "$WALLUST_CONF" ]; then
+            wallust run -C "$WALLUST_CONF" -p "$THEME_MODE" "$selected_path"
+        else
+            wallust run -p "$THEME_MODE" "$selected_path"
+        fi
+    fi
+
+    # Reload all desktop daemons
+    pkill -SIGUSR2 waybar 2>/dev/null || true
+    if command -v dunstctl >/dev/null 2>&1; then
+        dunstctl reload 2>/dev/null || true
+    fi
+    if command -v hyprctl >/dev/null 2>&1; then
+        hyprctl reload 2>/dev/null || true
+    fi
+    pkill -SIGUSR2 swayosd-server 2>/dev/null || true
+
+    notify-send -u low -i preferences-desktop-theme \
+        "Wallpaper Switcher" "Applied: <b>$(basename "$selected_path")</b>" 2>/dev/null || true
 fi

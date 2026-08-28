@@ -16,6 +16,7 @@
           backupFileExtension = "backup";
           sharedModules = [
             inputs.nix-flatpak.homeManagerModules.nix-flatpak
+            inputs.nvf.homeManagerModules.default
           ];
         };
       }
@@ -29,6 +30,7 @@
         networking.hostName = "powerhouse";
         time.timeZone = "Asia/Jakarta";
         i18n.defaultLocale = "en_US.UTF-8";
+        programs.nh.flake = "/home/kryisnn/.config/flint";
 
         # User Account (System-level)
         users.users.kryisnn = {
@@ -63,6 +65,7 @@
 
             # Dev Modules
             dev             # languages, package managers, cli tools
+            dev-nvf         # modular neovim framework (nvf)
             dev-utils       # agentic AI, db management, editors
             dev-extra       # game dev and local AI stuff
 

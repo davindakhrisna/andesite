@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
 # Export PATH with user profiles and system fallbacks
-export PATH="/nix/store/75mgj6095m874gm4pswsk5j6c123af64-dunst-1.13.2/bin:/run/current-system/sw/bin:/etc/profiles/per-user/$USER/bin:$HOME/.nix-profile/bin:$PATH"
+export PATH="/run/current-system/sw/bin:/etc/profiles/per-user/$USER/bin:$HOME/.nix-profile/bin:$PATH"
+
+FLINT_DIR="${FLINT_DIR:-${HOME}/.config/flint}"
 
 # Ensure dunst daemon is running
 if ! pgrep -x "dunst" > /dev/null; then
-    dunst -config "${HOME}/.config/flint/modules/home/desktop/config/dunst/dunstrc" &
+    dunst -config "${FLINT_DIR}/modules/home/desktop/config/dunst/dunstrc" &
     sleep 0.2
 fi
 

@@ -1,8 +1,22 @@
 {
   flake.homeModules.dev = {
+    config,
     pkgs,
     ...
-  }: {
+  }: let
+    mkenv = pkgs.writeShellApplication {
+      name = "mkenv";
+      runtimeInputs = with pkgs; [
+        fzf
+        git
+        direnv
+        coreutils
+        gawk
+        libnotify
+      ];
+      text = builtins.readFile ./mkenv.sh;
+    };
+  in {
     programs.git = {
       enable = true;
       settings = {
@@ -11,7 +25,7 @@
           email = "arpeggio.gns@gmail.com";
         };
         init.defaultBranch = "main";
-        safe.directory = [ "/home/kryisnn/.config/flint" "*" ];
+        safe.directory = [ "${config.home.homeDirectory}/.config/flint" "*" ];
       };
     };
 
@@ -27,6 +41,9 @@
 
     home = {
       packages = with pkgs; [
+        # Nix-Direnv Bootstrapper
+        mkenv
+
         # Web & General Dev Languages
         go
         nodejs

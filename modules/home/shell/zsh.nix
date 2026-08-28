@@ -8,11 +8,32 @@
     home.packages = with pkgs; [
       bat
       ripgrep
+      eza
+      duf
+      fd
     ];
 
     home.sessionVariables = {
       COLORTERM = "truecolor";
       MANPAGER = "bat -l man -p";
+    };
+
+    programs.fzf = {
+      enable = true;
+      enableZshIntegration = true;
+      defaultCommand = "fd --type f --strip-cwd-prefix --hidden --exclude .git";
+      fileWidget.command = "fd --type f --strip-cwd-prefix --hidden --exclude .git";
+      changeDirWidget.command = "fd --type d --strip-cwd-prefix --hidden --exclude .git";
+      defaultOptions = [
+        "--height 45%"
+        "--layout=reverse"
+        "--border"
+        "--inline-info"
+      ];
+      historyWidget.options = [
+        "--sort"
+        "--exact"
+      ];
     };
 
     programs.zsh = {
@@ -57,15 +78,10 @@
         # Change default
         vim = "nvim";
         vi = "nvim";
-        cd = "z";
-        ls = "eza --icons=always --no-quotes";
-        tree = "eza --icons=always --tree --no-quotes";
-        cat = "bat --theme=base16 --color=always --paging=never --tabs=2 --wrap=never --plain";
         mkdir = "mkdir -p";
         nix-shell = "nix-shell --command zsh";
-        grep = "rg --color=auto";
         diff = "diff --color=auto";
-        df = "duf";
+        tree = "eza --icons=always --tree --no-quotes";
 
         # Shortcuts
         spt = "spotatui";
@@ -88,6 +104,14 @@
         grh = "git reset --hard HEAD~1";
         gaa = "git add .";
         gcm = "git commit -m";
+
+        # Nix & System Management (nh)
+        nos = "nh os switch";
+        not = "nh os test";
+        nob = "nh os boot";
+        nclean = "nh clean all";
+        ncheck = "nix flake check \${FLINT_DIR:-\$HOME/.config/flint} --no-build";
+        nup = "nix flake update --flake \${FLINT_DIR:-\$HOME/.config/flint}";
 
         # Original binaries
         ocat = "/run/current-system/sw/bin/cat";
@@ -114,6 +138,60 @@
           }
         '')
         ''
+          # Source Wallust Dynamic Colors for FZF & Shell
+          [[ -f "$HOME/.cache/wallust/colors-fzf.zsh" ]] && source "$HOME/.cache/wallust/colors-fzf.zsh"
+
+          # Modern CLI Tool Reminders
+          unalias cd cat ls df grep find 2>/dev/null || true
+
+          _hint() {
+            if [[ -o interactive || -t 1 || -t 2 ]]; then
+              echo -e "\033[1;33m💡 [Tip]\033[0m Use \033[1;36m$1\033[0m instead of \033[1;31m$2\033[0m"
+            fi
+          }
+
+          function cd {
+            builtin cd "$@"
+            local ret=$?
+            _hint "z" "cd"
+            return $ret
+          }
+
+          function cat {
+            command cat "$@"
+            local ret=$?
+            _hint "bat" "cat"
+            return $ret
+          }
+
+          function ls {
+            command ls "$@"
+            local ret=$?
+            _hint "eza" "ls"
+            return $ret
+          }
+
+          function df {
+            command df "$@"
+            local ret=$?
+            _hint "duf" "df"
+            return $ret
+          }
+
+          function grep {
+            command grep "$@"
+            local ret=$?
+            _hint "rg (ripgrep)" "grep"
+            return $ret
+          }
+
+          function find {
+            command find "$@"
+            local ret=$?
+            _hint "fd" "find"
+            return $ret
+          }
+
           # Suffix Aliases
           alias -s {nix,md,txt,yml,yaml,go}=nvim
           alias -s {json,jsonl}=jless
@@ -140,7 +218,9 @@
           zvm_after_init() {
             bindkey '^[[1;5C' forward-word
             bindkey '^[[1;5D' backward-word
-            bindkey '^F' _fzf_file_no_hidden
+            bindkey '^R' fzf-history-widget
+            bindkey '^T' fzf-file-widget
+            bindkey '^[c' fzf-cd-widget
             bindkey '^[[A' history-substring-search-up
             bindkey '^[[B' history-substring-search-down
           }

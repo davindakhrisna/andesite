@@ -1,6 +1,9 @@
+@import "colors-swayosd.css";
+
 window {
-    background: rgba(24, 24, 37, 0.90);
-    border: 2px solid #8e94a8;
+    background-color: @background;
+    background: @background;
+    border: 2px solid @accent;
     border-radius: 0px;
     padding: 12px 18px;
     font-family: "Iosevka Nerd Font", monospace;
@@ -18,29 +21,32 @@ image:disabled {
 progressbar {
     min-height: 8px;
     border-radius: 0px;
-    background: #313244;
+    background-color: @trough;
+    background: @trough;
 }
 
 trough {
     min-height: 8px;
     border-radius: 0px;
     border: none;
-    background: #313244;
+    background-color: @trough;
+    background: @trough;
 }
 
 progress {
     min-height: 8px;
     border-radius: 0px;
     border: none;
-    background: #8e94a8;
+    background-color: @accent;
+    background: @accent;
 }
 
 label {
     font-size: 14px;
     font-weight: bold;
-    color: #cdd6f4;
+    color: @foreground;
 }
 
 image {
-    color: #cdd6f4;
+    color: @foreground;
 }

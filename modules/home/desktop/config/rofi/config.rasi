@@ -1,0 +1,152 @@
+/* ==============================================================================
+ * Flint Rofi Base Configuration (100% Dynamic Wallust Theming)
+ * Strict TUI Aesthetic: 0-radius corners, 2px borders, clean contrast
+ * ============================================================================== */
+
+@import "colors-rofi.rasi"
+
+configuration {
+    modi: "drun,run,filebrowser,window";
+    font: "Iosevka Nerd Font 11";
+    show-icons: true;
+    display-drun: "APPS";
+    display-run: "EXEC";
+    display-filebrowser: "FILES";
+    display-window: "WINDOW";
+    drun-display-format: "{name}";
+    window-format: "{w} · {c} · {t}";
+}
+
+* {
+    background-color: transparent;
+    text-color: @foreground;
+    margin: 0px;
+    padding: 0px;
+    spacing: 0px;
+}
+
+window {
+    width: 640px;
+    location: center;
+    anchor: center;
+    spacing: 0px;
+    padding: 0px;
+    margin: 0px;
+    border: 2px solid;
+    border-color: @border-col;
+    border-radius: 0px;
+    background-color: @background;
+}
+
+mainbox {
+    spacing: 10px;
+    padding: 16px;
+    children: [ "inputbar", "message", "listview" ];
+}
+
+inputbar {
+    spacing: 8px;
+    padding: 8px 12px;
+    background-color: @background-alt;
+    border: 1px solid;
+    border-color: @border-col;
+    border-radius: 0px;
+    children: [ "prompt", "entry" ];
+}
+
+prompt {
+    text-color: @primary;
+    font: "Iosevka Nerd Font Bold 11";
+}
+
+entry {
+    text-color: @foreground;
+    placeholder: "Type to search...";
+    placeholder-color: @border-col;
+}
+
+listview {
+    lines: 8;
+    columns: 1;
+    fixed-height: true;
+    spacing: 4px;
+    scrollbar: false;
+}
+
+element {
+    padding: 8px 12px;
+    spacing: 10px;
+    border-radius: 0px;
+    background-color: transparent;
+    text-color: @foreground;
+}
+
+/* Unselected items (Normal & Alternate rows) */
+element normal.normal {
+    background-color: transparent;
+    text-color: @foreground;
+}
+
+element normal.active {
+    background-color: transparent;
+    text-color: @active;
+}
+
+element normal.urgent {
+    background-color: transparent;
+    text-color: @alert;
+}
+
+element alternate.normal {
+    background-color: transparent;
+    text-color: @foreground;
+}
+
+element alternate.active {
+    background-color: transparent;
+    text-color: @active;
+}
+
+element alternate.urgent {
+    background-color: transparent;
+    text-color: @alert;
+}
+
+/* Selected / Focused Item */
+element selected.normal {
+    background-color: @selected;
+    text-color: @selected-fg;
+}
+
+element selected.active {
+    background-color: @active;
+    text-color: @selected-fg;
+}
+
+element selected.urgent {
+    background-color: @alert;
+    text-color: @selected-fg;
+}
+
+element-icon {
+    size: 22px;
+    vertical-align: 0.5;
+}
+
+element-text {
+    text-color: inherit;
+    vertical-align: 0.5;
+}
+
+message {
+    padding: 6px 12px;
+    border: 1px solid;
+    border-color: @border-col;
+    border-radius: 0px;
+    background-color: @background-alt;
+}
+
+textbox {
+    text-color: @foreground;
+    font: "Iosevka Nerd Font 10";
+}

@@ -5,75 +5,56 @@
 
 local mainMod = "SUPER"
 local terminal = "kitty"
-local scriptDir = (os.getenv("HOME") or "") .. "/.config/flint/modules/home/desktop/config/hyprland/scripts/"
+local flintDir = os.getenv("FLINT_DIR") or ((os.getenv("HOME") or "") .. "/.config/flint")
+local scriptDir = flintDir .. "/modules/home/desktop/config/hyprland/scripts/"
 
 ----------------------------------------
--- Core Actions: Terminal, Close, Exit
+-- Core Actions: Terminal
 ----------------------------------------
 
 -- Enter terminal
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + T",      hl.dsp.exec_cmd(terminal))
 
--- Close active app / window
-hl.bind(mainMod .. " + Q",      hl.dsp.window.close())
-hl.bind(mainMod .. " + C",      hl.dsp.window.close())
+-- Rofi
+hl.bind(mainMod .. " + Space",  hl.dsp.exec_cmd("rofi -show drun -show-icons"))             -- Application Launcher (Rofi)
+hl.bind(mainMod .. " + comma",      hl.dsp.exec_cmd(scriptDir .. "clipboard.sh"))               -- Clipboard History (Cliphist + Rofi)
+hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("rofimoji --action copy"))                  -- Emoji & Glyph Picker (Rofimoji)
+hl.bind(mainMod .. " + Escape",    hl.dsp.exec_cmd(scriptDir .. "powermenu.sh"))            -- Power Menu (Rofi TUI Modal)
+hl.bind(mainMod .. " + SHIFT+ T",         hl.dsp.exec_cmd(scriptDir .. "wallpaper-switcher.sh"))   -- Wallpaper Switcher (Awww + Rofi Visual Grid)
+hl.bind(mainMod .. " + A",         hl.dsp.exec_cmd(scriptDir .. "animation-switcher.sh"))   -- Animation Preset Switcher (Rofi)
+hl.bind(mainMod .. " + T",         hl.dsp.exec_cmd(scriptDir .. "theme-switcher.sh"))       -- Theme Mode Switcher (Rofi Light/Dark Mode)
+hl.bind(mainMod .. " + slash",     hl.dsp.exec_cmd(scriptDir .. "keybindings-cheatsheet.sh")) -- Keybindings Cheatsheet (Rofi / TUI)
+hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("kitty --class tui-modal -e flint-pkgs")) -- Packages & Modules Explorer (Flint-Pkgs TUI Modal)
 
--- Application Launcher (Rofi)
-hl.bind(mainMod .. " + Space",  hl.dsp.exec_cmd("rofi -show drun -show-icons"))
-hl.bind(mainMod .. " + D",      hl.dsp.exec_cmd("rofi -show drun -show-icons"))
-
--- Clipboard History (Cliphist + Rofi)
-hl.bind(mainMod .. " + V",      hl.dsp.exec_cmd(scriptDir .. "clipboard.sh"))
-
--- Emoji & Glyph Picker (Rofimoji)
-hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("rofimoji --action copy"))
-
--- Power Menu (Rofi TUI Modal)
-hl.bind(mainMod .. " + Escape",    hl.dsp.exec_cmd(scriptDir .. "powermenu.sh"))
-hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd("hyprctl dispatch exit"))
-
--- Wallpaper Switcher (Awww + Rofi Visual Grid)
-hl.bind(mainMod .. " + W",         hl.dsp.exec_cmd(scriptDir .. "wallpaper-switcher.sh"))
-
--- Night Light Toggle (Hyprsunset)
-hl.bind(mainMod .. " + N",         hl.dsp.exec_cmd(scriptDir .. "nightlight.sh"))
-
--- Game Mode Toggle (Max FPS)
-hl.bind(mainMod .. " + F1",        hl.dsp.exec_cmd(scriptDir .. "gamemode.sh"))
+-- Scripts
+hl.bind(mainMod .. " + N",         hl.dsp.exec_cmd(scriptDir .. "nightlight.sh"))           -- Night Light Toggle (Hyprsunset)
+hl.bind(mainMod .. " + G",        hl.dsp.exec_cmd(scriptDir .. "gamemode.sh"))             -- Game Mode Toggle (Max FPS)
 
 ----------------------------------------
 -- Screenshots (Grim + Slurp + Satty)
 -- [Workflow: Region/Full -> Copy to Clipboard FIRST -> Open in Satty]
 ----------------------------------------
 
--- Region / Area screenshot
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd(scriptDir .. "screenshot.sh region"))
-hl.bind("Print",                   hl.dsp.exec_cmd(scriptDir .. "screenshot.sh region"))
-
--- Fullscreen screenshot
-hl.bind(mainMod .. " + Print",     hl.dsp.exec_cmd(scriptDir .. "screenshot.sh full"))
-
--- Active Window screenshot
-hl.bind("ALT + Print",             hl.dsp.exec_cmd(scriptDir .. "screenshot.sh window"))
+hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd(scriptDir .. "screenshot.sh region"))    -- Region / Area screenshot 
+hl.bind(mainMod .. " + Print",     hl.dsp.exec_cmd(scriptDir .. "screenshot.sh full"))      -- Fullscreen screenshot
+hl.bind("ALT + Print",             hl.dsp.exec_cmd(scriptDir .. "screenshot.sh window"))    -- Active Window screenshot
 
 ----------------------------------------
 -- Window Layout & Floating
 ----------------------------------------
 
-hl.bind(mainMod .. " + SHIFT + Space", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + Q",      hl.dsp.window.close())                                      -- Close active app / window
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F",             hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + P",             hl.dsp.window.pseudo())
-hl.bind(mainMod .. " + J",             hl.dsp.layout("togglesplit"))
+hl.bind(mainMod .. " + W",             hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + SHIFT + L",             hl.dsp.layout("togglesplit"))
 
 ----------------------------------------
 -- Scratchpad (Special Workspace)
 ----------------------------------------
 
--- Toggle special scratchpad workspace
-hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
--- Move active window to special scratchpad workspace
-hl.bind(mainMod .. " + SHIFT + Z", hl.dsp.window.move({ workspace = "special:magic" }))
+hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))            -- Toggle special scratchpad workspace
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" })) -- Move active window to special scratchpad workspace
 
 ----------------------------------------
 -- Focus Movement
@@ -89,6 +70,7 @@ hl.bind(mainMod .. " + down",   hl.dsp.focus({ direction = "down" }))
 hl.bind(mainMod .. " + H",      hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + L",      hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + K",      hl.dsp.focus({ direction = "up" }))
+hl.bind(mainMod .. " + J",      hl.dsp.focus({ direction = "down" }))
 
 ----------------------------------------
 -- Workspace Navigation (1 - 10)
@@ -130,3 +112,14 @@ hl.bind("XF86AudioPlay",        hl.dsp.exec_cmd("playerctl play-pause"), { locke
 hl.bind("XF86AudioPause",       hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioNext",        hl.dsp.exec_cmd("playerctl next"),       { locked = true })
 hl.bind("XF86AudioPrev",        hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
+
+----------------------------------------
+-- Apps
+----------------------------------------
+
+hl.bind(mainMod .. " + SHIFT + B",  hl.dsp.exec_cmd("helium"))  
+hl.bind(mainMod .. " + SHIFT + M",  hl.dsp.exec_cmd("spotify"))
+hl.bind(mainMod .. " + SHIFT + N",  hl.dsp.exec_cmd("kitty -e nvim"))
+hl.bind(mainMod .. " + SHIFT + E",  hl.dsp.exec_cmd("kitty -e yazi"))
+hl.bind(mainMod .. " + SHIFT + O",  hl.dsp.exec_cmd("obsidian"))
+hl.bind(mainMod .. " + SHIFT + D",  hl.dsp.exec_cmd("vesktop"))

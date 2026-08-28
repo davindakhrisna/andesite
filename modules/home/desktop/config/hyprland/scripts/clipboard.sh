@@ -28,67 +28,70 @@ case "$ACTION" in
             -p "Clipboard" \
             -mesg "Select to copy | Type to search | 'wipe' to clear" \
             -theme-str '
-            * {
-                font: "Iosevka Nerd Font 12";
-                background-color: transparent;
-                text-color: #cdd6f4;
-            }
             window {
                 location: center;
                 anchor: center;
-                width: 620px;
+                width: 680px;
                 border: 2px solid;
-                border-color: #8e94a8;
+                border-color: @border-col;
                 border-radius: 0px;
-                background-color: #181825;
-                padding: 10px;
+                background-color: @background;
+                padding: 12px;
             }
             mainbox {
-                spacing: 6px;
-                children: [ inputbar, listview, message ];
+                spacing: 8px;
+                children: [ inputbar, message, listview ];
             }
             inputbar {
                 padding: 8px 12px;
-                background-color: #1e1e2e;
+                background-color: @background-alt;
+                border: 1px solid;
+                border-color: @border-col;
                 border-radius: 0px;
                 children: [ prompt, entry ];
             }
             prompt {
                 font: "Iosevka Nerd Font Bold 12";
+                text-color: @primary;
                 margin: 0px 8px 0px 0px;
             }
             entry {
+                text-color: @foreground;
                 placeholder: "Search clip history (text / images)...";
+                placeholder-color: @border-col;
             }
             listview {
                 lines: 8;
                 columns: 1;
                 fixed-height: false;
                 scrollbar: false;
-                spacing: 2px;
+                spacing: 4px;
                 padding: 4px 0px;
             }
             element {
-                padding: 6px 12px;
+                padding: 8px 12px;
                 border-radius: 0px;
-                text-color: #cdd6f4;
+                background-color: transparent;
+                text-color: @foreground;
             }
             element selected {
-                background-color: #2b1bb5;
-                text-color: #ffffff;
+                background-color: @selected;
+                text-color: @selected-fg;
             }
             element-text {
                 text-color: inherit;
             }
             message {
-                padding: 6px;
-                border: 2px 0px 0px 0px;
-                border-color: #8e94a8;
+                padding: 6px 12px;
+                border: 1px solid;
+                border-color: @border-col;
+                border-radius: 0px;
+                background-color: @background-alt;
             }
             textbox {
                 horizontal-align: 0.5;
                 font: "Iosevka Nerd Font 10";
-                text-color: #a6adc8;
+                text-color: @foreground;
             }
             ')
 

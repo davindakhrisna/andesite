@@ -3,9 +3,11 @@
 # Export PATH with system fallbacks
 export PATH="/run/current-system/sw/bin:/etc/profiles/per-user/$USER/bin:$HOME/.nix-profile/bin:$PATH"
 
+FLINT_DIR="${FLINT_DIR:-${HOME}/.config/flint}"
+
 # Ensure dunst daemon is running
 if ! pgrep -x "dunst" > /dev/null; then
-    dunst -config "${HOME}/.config/flint/modules/home/desktop/config/dunst/dunstrc" &
+    dunst -config "${FLINT_DIR}/modules/home/desktop/config/dunst/dunstrc" &
     sleep 0.2
 fi
 

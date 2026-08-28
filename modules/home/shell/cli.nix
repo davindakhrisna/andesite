@@ -11,13 +11,24 @@
       ];
       text = ''exec "${pkgs.nix-search-tv.src}/nixpkgs.sh" "$@"'';
     };
+    flintPkgs = pkgs.writeShellApplication {
+      name = "flint-pkgs";
+      runtimeInputs = with pkgs; [
+        fzf
+        coreutils
+        gawk
+      ];
+      text = builtins.readFile ./flint-pkgs.sh;
+    };
   in {
     home.packages = with pkgs; [
+      # Flint Package & Modules Cheatsheet
+      flintPkgs
+
       # Nix search & info
       ns
       fastfetch
       areofyl-fetch
-      fzf
 
       # Modern CLI replacements
       bat           # cat

@@ -1,20 +1,45 @@
 {
-  flake.homeModules.productivity = {pkgs, ...}: {
+  flake.homeModules.productivity = {
+    pkgs,
+    ...
+  }: let
+    # TUI Productivity tools runtime dependencies
+    tuiPackages = with pkgs; [
+      basalt          # Primary Note taker
+      hackernews-tui  # Y Combinator news reader
+      pomo            # Pomodoro focus timer
+    ];
+
+    # Custom Multi-TUI Workspace Runner
+    basaltix = pkgs.writeShellApplication {
+      name = "basaltix";
+      runtimeInputs = with pkgs; [
+        tmux
+        fzf
+        coreutils
+        gawk
+      ] ++ tuiPackages;
+      text = builtins.readFile ./basaltix.sh;
+    };
+  in {
     home.packages = with pkgs; [
-      # TUI
-      # - custom OPDS epub/pdf reader (i will create it on my own) 
-      hacker-news-tui # Y Combinator news maybe?
-      basalt          # note taker
-      pomo            # pomodoro
-      sioyek          # technical research reader
+      # Custom Workspace Runner
+      basaltix
+
+      # TUI Productivity Suite
+      # custom OPDS
+      hackernews-tui
+      basalt
+      pomo
+      sioyek
+      pi-coding-agent
 
       # GUI
-      obsidian        # note taking
-      xournalpp       # draw
-      onlyoffice-desktopeditors # great compatibility with ms-office
-      # masterpdfeditor # upstream vendor 404 on current version tarball
-      pdfarranger     # PDF merge, split, rotate and edit tool
-      freecad         # 3D parametric CAD modeler
+      obsidian
+      xournalpp
+      onlyoffice-desktopeditors
+      pdfarranger
+      freecad
     ];
   };
 }

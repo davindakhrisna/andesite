@@ -17,6 +17,15 @@ hl.monitor({
 })
 
 --------------------
+---- ENV VARIABLES -
+--------------------
+
+hl.env("XCURSOR_THEME", "Bibata-Modern-Classic")
+hl.env("XCURSOR_SIZE", "24")
+hl.env("HYPRCURSOR_THEME", "Bibata-Modern-Classic")
+hl.env("HYPRCURSOR_SIZE", "24")
+
+--------------------
 ---- CONFIGURATION -
 --------------------
 
@@ -27,6 +36,13 @@ hl.config({
         border_size = 3,
         layout = "dwindle",
         allow_tearing = false,
+        col = {
+            active_border = {
+                colors = { "rgb(89b4fa)", "rgb(94e2d5)" },
+                angle = 45,
+            },
+            inactive_border = "rgb(313244)",
+        },
     },
     cursor = {
         -- Prevents stutter/frame pacing issues on NVIDIA hardware
@@ -151,6 +167,15 @@ hl.on("hyprland.start", function()
 
     -- Polkit authentication agent
     hl.dsp.exec_cmd("/run/current-system/sw/libexec/polkit-gnome-authentication-agent-1")
+
+    -- System Event Notifier (Network, Bluetooth, Battery)
+    hl.dsp.exec_cmd("system-notifier.sh")
+
+    -- Auto Monitor Detection & Layout Confirmation
+    hl.dsp.exec_cmd("auto-monitor.sh")
+
+    -- Set default cursor theme
+    hl.dsp.exec_cmd("hyprctl setcursor Bibata-Modern-Classic 24")
 end)
 
 ---------------------
@@ -159,3 +184,9 @@ end)
 
 require("animations")
 require("bindings")
+
+-- Dynamic Wallust Active/Inactive Border Colors
+pcall(dofile, os.getenv("HOME") .. "/.cache/wallust/colors.lua")
+
+-- Force Cursor Theme on Reload
+hl.dsp.exec_cmd("hyprctl setcursor Bibata-Modern-Classic 24")
