@@ -30,7 +30,6 @@
         networking.hostName = "template"; # CHANGEME: Hostname
         time.timeZone = "Asia/Jakarta";   # CHANGEME: Timezone
         i18n.defaultLocale = "en_US.UTF-8";
-        programs.nh.flake = "/home/yourusername/.config/flint"; # CHANGEME: Path to your flint flake
 
         # User Account (System-level)
         users.users.yourusername = { # CHANGEME: Username
@@ -47,8 +46,9 @@
           ];
         };
 
-        # Hardware 
-        var = { # CHANGEME (your hardware specs)
+        # Hardware & Flake Path
+        var = { # CHANGEME (your hardware specs & flake path)
+          flakePath = "/etc/nixos"; # CHANGEME: Path to your flake repository
           cpu = "intel";
           gpu = "nvidia";
           nvidia.mode = "desktop"; # ["desktop" "offload" "sync"] -- or just comment it if you dont use nvidia
@@ -61,18 +61,13 @@
             desktop
             shell
             productivity
-            extra-pkgs
-
-            # Dev Modules
-            dev             # languages, package managers, cli tools
-            dev-nvf         # modular neovim framework (nvf)
-            dev-utils       # agentic AI, db management, editors
-            dev-extra       # game dev and local AI stuff
-
-            # Entertainment
+            dev
             entertainment-social
             entertainment-gaming
           ];
+
+          # Dev Environment Profile: "off" | "min" | "mid" | "max"
+          dev = "mid"; # CHANGEME
         };
 
         system.stateVersion = "26.05";

@@ -7,6 +7,7 @@
     system = "x86_64-linux";
     specialArgs = {inherit inputs self;};
     modules = [
+      ./_hardware.nix
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager = {
@@ -20,7 +21,6 @@
           ];
         };
       }
-      ./_hardware.nix
 
       # System modules
       self.nixosModules.system
@@ -30,7 +30,6 @@
         networking.hostName = "powerhouse";
         time.timeZone = "Asia/Jakarta";
         i18n.defaultLocale = "en_US.UTF-8";
-        programs.nh.flake = "/home/kryisnn/.config/flint";
 
         # User Account (System-level)
         users.users.kryisnn = {
@@ -47,8 +46,9 @@
           ];
         };
 
-        # Hardware
+        # Hardware & Flake Path
         var = {
+          flakePath = "/home/kryisnn/.config/flint"; # Path to your flint flake repository
           cpu = "intel";
           gpu = "nvidia";
           nvidia.mode = "desktop";
@@ -61,18 +61,13 @@
             desktop
             shell
             productivity
-            extra-pkgs
-
-            # Dev Modules
-            dev             # languages, package managers, cli tools
-            dev-nvf         # modular neovim framework (nvf)
-            dev-utils       # agentic AI, db management, editors
-            dev-extra       # game dev and local AI stuff
-
-            # Entertainment
+            dev
             entertainment-social
             entertainment-gaming
           ];
+
+          # Dev Environment Profile: "off" | "min" | "mid" | "max"
+          dev = "max";
         };
 
         system.stateVersion = "26.05";

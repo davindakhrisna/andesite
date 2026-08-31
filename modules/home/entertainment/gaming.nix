@@ -20,6 +20,13 @@
       };
     };
 
+    services.flatpak = {
+      enable = true;
+      packages = [
+        "org.vinegarhq.Sober"
+      ];
+    };
+
     home.packages = with pkgs; [
       # Game Compatibility & Launchers
       protonup-qt

@@ -3,14 +3,17 @@
     config,
     lib,
     pkgs,
+    osConfig ? {},
     ...
-  }: {
+  }: let
+    flakePath = osConfig.var.flakePath or "${config.home.homeDirectory}/.config/flint";
+  in {
     xdg.enable = true;
     home.stateVersion = "26.05";
     home.sessionVariables = {
       EDITOR = "nvim";
-      FLINT_DIR = "${config.home.homeDirectory}/.config/flint";
-      NH_FLAKE = "${config.home.homeDirectory}/.config/flint";
+      FLINT_DIR = flakePath;
+      NH_FLAKE = flakePath;
 
       # NVIDIA & OpenGL cache
       CUDA_CACHE_PATH = "$HOME/.cache/nv";

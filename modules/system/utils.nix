@@ -3,11 +3,6 @@
     # Desktop packages
     programs.chromium.enable = true; # Also serve as fallback browser
 
-    # NH (NixOS Helper)
-    programs.nh = {
-      enable = true;
-    };
-
     environment.systemPackages = with pkgs; [
       # Development Tools
       htop

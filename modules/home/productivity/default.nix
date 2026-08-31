@@ -2,33 +2,16 @@
   flake.homeModules.productivity = {
     pkgs,
     ...
-  }: let
-    # TUI Productivity tools runtime dependencies
-    tuiPackages = with pkgs; [
-      basalt          # Primary Note taker
-      hackernews-tui  # Y Combinator news reader
-      pomo            # Pomodoro focus timer
-      pi-coding-agent # AI Assistant
-    ];
-
-    # Custom Multi-TUI Workspace Runner
-    basaltix = pkgs.writeShellApplication {
-      name = "basaltix";
-      runtimeInputs = with pkgs; [
-        tmux
-        fzf
-        coreutils
-        gawk
-      ] ++ tuiPackages;
-      text = builtins.readFile ./basaltix.sh;
+  }: {
+    services.flatpak = {
+      enable = true;
+      packages = [
+        "com.obsproject.Studio"
+      ];
     };
-  in {
-    home.packages = with pkgs; [
-      # Custom Workspace Runner
-      basaltix
 
+    home.packages = with pkgs; [
       # TUI Productivity Suite
-      # custom OPDS
       hackernews-tui
       basalt
       pomo

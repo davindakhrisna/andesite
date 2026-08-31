@@ -15,14 +15,10 @@
     # Wayland session flags & display manager
     environment.sessionVariables = {
       NIXOS_OZONE_WL = "1";
-      LIBVA_DRIVER_NAME = "nvidia";
-      GBM_BACKEND = "nvidia-drm";
-      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-      NVD_BACKEND = "direct";
       ELECTRON_OZONE_PLATFORM_HINT = "auto";
     };
 
-    services.displayManager.ly.enable = true;
+    services.displayManager.lemurs.enable = true;
 
     # PAM authentication for Hyprlock (instant zero-delay login)
     security.pam.services.hyprlock = {};

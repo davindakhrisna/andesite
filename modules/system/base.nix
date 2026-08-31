@@ -1,9 +1,19 @@
 {
   flake.nixosModules.base = {
+    config,
+    lib,
     pkgs,
     inputs,
     ...
   }: {
+    options.var = {
+      flakePath = lib.mkOption {
+        type = lib.types.str;
+        default = "/etc/nixos";
+        description = "Path to the NixOS configuration flake directory";
+      };
+    };
+
     # Boot & Kernel Hardening
     boot = {
       kernel.sysctl = {
@@ -34,6 +44,12 @@
       };
     };
 
+    # Nix Helper (nh)
+    programs.nh = {
+      enable = true;
+      flake = config.var.flakePath;
+    };
+
     # System Services
     services.power-profiles-daemon.enable = true;
     security.rtkit.enable = true;
@@ -50,13 +66,24 @@
       udisks2.enable = true;
       ollama = {
         enable = true;
-        package = pkgs.ollama-cuda;
+        package =
+          if config.var.gpu == "nvidia" then
+            pkgs.ollama-cuda
+          else if config.var.gpu == "amd" then
+            pkgs.ollama-rocm
+          else
+            pkgs.ollama;
       };
     };
 
     # Shell & Environment
     programs.zsh.enable = true;
-    environment.sessionVariables.ZDOTDIR = "$HOME/.config/zsh";
+    environment.sessionVariables = {
+      ZDOTDIR = "$HOME/.config/zsh";
+      FLINT_DIR = config.var.flakePath;
+      NH_FLAKE = config.var.flakePath;
+    };
+
     programs.git = {
       enable = true;
       config = {

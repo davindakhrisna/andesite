@@ -1,23 +1,12 @@
-{ self, ... }: {
-  imports = [
-    ./pkgs/base.nix
-    ./pkgs/hyprland.nix
-    ./pkgs/waybar.nix
-    ./pkgs/wallpaper.nix
-    ./pkgs/lockscreen.nix
-    ./pkgs/dunst.nix
-    ./pkgs/swayosd.nix
-  ];
-
+{
   flake.homeModules.desktop = {...}: {
-    imports = with self.homeModules; [
-      desktop-hyprland
-      desktop-waybar
-      desktop-wallpaper
-      desktop-lockscreen
-      desktop-dunst
-      desktop-swayosd
-      desktop-base
+    imports = [
+      ./_pkgs/base.nix
+      ./_pkgs/hyprland.nix
+      ./_pkgs/quickshell.nix
+      ./_pkgs/wallpaper.nix
+      ./_pkgs/lockscreen.nix
+      ./_pkgs/dunst.nix
     ];
   };
 }

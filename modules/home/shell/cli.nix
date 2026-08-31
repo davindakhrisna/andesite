@@ -2,31 +2,10 @@
   flake.homeModules.utils-cli = {
     pkgs,
     ...
-  }: let
-    ns = pkgs.writeShellApplication {
-      name = "ns";
-      runtimeInputs = with pkgs; [
-        fzf
-        nix-search-tv
-      ];
-      text = ''exec "${pkgs.nix-search-tv.src}/nixpkgs.sh" "$@"'';
-    };
-    flintPkgs = pkgs.writeShellApplication {
-      name = "flint-pkgs";
-      runtimeInputs = with pkgs; [
-        fzf
-        coreutils
-        gawk
-      ];
-      text = builtins.readFile ./flint-pkgs.sh;
-    };
-  in {
+  }: {
     home.packages = with pkgs; [
-      # Flint Package & Modules Cheatsheet
-      flintPkgs
-
-      # Nix search & info
-      ns
+      # Nix search & system info
+      nix-search-tv
       fastfetch
       areofyl-fetch
 
