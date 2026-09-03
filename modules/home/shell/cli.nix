@@ -1,8 +1,5 @@
 {
-  flake.homeModules.utils-cli = {
-    pkgs,
-    ...
-  }: {
+  flake.homeModules.utils-cli = {pkgs, ...}: {
     home.packages = with pkgs; [
       # Nix search & system info
       nix-search-tv
@@ -10,11 +7,11 @@
       areofyl-fetch
 
       # Modern CLI replacements
-      bat           # cat
-      duf           # df
-      eza           # ls
-      ripgrep       # grep
-      fd            # find
+      bat # cat
+      duf # df
+      eza # ls
+      ripgrep # grep
+      fd # find
 
       # Compatibility & execution
       appimage-run

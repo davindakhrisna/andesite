@@ -26,13 +26,15 @@
       self.nixosModules.system
 
       # Host-specific Configuration
-      ({pkgs, ...}: { # CHANGEME
+      ({pkgs, ...}: {
+        # CHANGEME
         networking.hostName = "template"; # CHANGEME: Hostname
-        time.timeZone = "Asia/Jakarta";   # CHANGEME: Timezone
+        time.timeZone = "Asia/Jakarta"; # CHANGEME: Timezone
         i18n.defaultLocale = "en_US.UTF-8";
 
         # User Account (System-level)
-        users.users.yourusername = { # CHANGEME: Username
+        users.users.yourusername = {
+          # CHANGEME: Username
           isNormalUser = true;
           shell = pkgs.zsh;
           extraGroups = [
@@ -47,15 +49,18 @@
         };
 
         # Hardware & Flake Path
-        var = { # CHANGEME (your hardware specs & flake path)
+        var = {
+          # CHANGEME (your hardware specs & flake path)
           flakePath = "/etc/nixos"; # CHANGEME: Path to your flake repository
           cpu = "intel";
           gpu = "nvidia";
           nvidia.mode = "desktop"; # ["desktop" "offload" "sync"] -- or just comment it if you dont use nvidia
+          dualBoot.enable = false; # Set to true if dual-booting with Windows
         };
 
         # User Configuration (Home Manager level)
-        home-manager.users.yourusername = {...}: { # CHANGEME (to your liking)
+        home-manager.users.yourusername = {...}: {
+          # CHANGEME (to your liking)
           imports = with self.homeModules; [
             home-manager
             desktop

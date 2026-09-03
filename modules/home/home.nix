@@ -9,33 +9,55 @@
     flakePath = osConfig.var.flakePath or "${config.home.homeDirectory}/.config/flint";
   in {
     xdg.enable = true;
-    home.stateVersion = "26.05";
-    home.sessionVariables = {
-      EDITOR = "nvim";
-      FLINT_DIR = flakePath;
-      NH_FLAKE = flakePath;
 
-      # NVIDIA & OpenGL cache
-      CUDA_CACHE_PATH = "$HOME/.cache/nv";
-      __GL_SHADER_DISK_CACHE_PATH = "$HOME/.cache/nv";
+    home = {
+      stateVersion = "26.05";
 
-      # XCompose cache
-      XCOMPOSECACHE = "$HOME/.cache/X11/compose";
+      sessionVariables = {
+        EDITOR = "nvim";
+        FLINT_DIR = flakePath;
+        NH_FLAKE = flakePath;
 
-      # Shell & tool history / configs
-      HISTFILE = "$HOME/.local/state/bash/history";
-      WGETRC = "$HOME/.config/wgetrc";
-      DOCKER_CONFIG = "$HOME/.config/docker";
-      SQLITE_HISTORY = "$HOME/.local/state/sqlite_history";
+        # NVIDIA & OpenGL cache
+        CUDA_CACHE_PATH = "$HOME/.cache/nv";
+        __GL_SHADER_DISK_CACHE_PATH = "$HOME/.cache/nv";
 
-      # Rust
-      CARGO_HOME = "$HOME/.local/share/cargo";
-      RUSTUP_HOME = "$HOME/.local/share/rustup";
+        # XCompose cache
+        XCOMPOSECACHE = "$HOME/.cache/X11/compose";
+
+        # Shell & tool history / configs
+        HISTFILE = "$HOME/.local/state/bash/history";
+        WGETRC = "$HOME/.config/wgetrc";
+        DOCKER_CONFIG = "$HOME/.config/docker";
+        SQLITE_HISTORY = "$HOME/.local/state/sqlite_history";
+
+        # Rust
+        CARGO_HOME = "$HOME/.local/share/cargo";
+        RUSTUP_HOME = "$HOME/.local/share/rustup";
+      };
+
+      pointerCursor = {
+        enable = true;
+        name = "Bibata-Modern-Classic";
+        package = pkgs.bibata-cursors;
+        size = 24;
+        gtk.enable = true;
+        x11.enable = true;
+        hyprcursor.enable = true;
+      };
+
+      # Prevent Home Manager from linking legacy dotfiles directly in $HOME root
+      file =
+        {
+          ".zshenv".enable = false;
+        }
+        // (lib.optionalAttrs (config.gtk.theme.name != null) {
+          ".themes/${config.gtk.theme.name}".enable = false;
+        });
     };
 
     # Relocate .gtkrc-2.0 and .Xresources away from $HOME
     gtk = {
-      enable = true;
       theme = {
         name = "adw-gtk3-dark";
         package = pkgs.adw-gtk3;
@@ -55,16 +77,6 @@
       };
       gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
       gtk2.force = true;
-    };
-
-    home.pointerCursor = {
-      enable = true;
-      name = "Bibata-Modern-Classic";
-      package = pkgs.bibata-cursors;
-      size = 24;
-      gtk.enable = true;
-      x11.enable = true;
-      hyprcursor.enable = true;
     };
 
     dconf.settings = {
@@ -87,13 +99,6 @@
     };
 
     xresources.path = "${config.xdg.configHome}/X11/Xresources";
-
-    # Prevent Home Manager from linking legacy dotfiles directly in $HOME root
-    home.file = {
-      ".zshenv".enable = false;
-    } // (lib.optionalAttrs (config.gtk.theme.name != null) {
-      ".themes/${config.gtk.theme.name}".enable = false;
-    });
 
     programs.home-manager.enable = true;
   };

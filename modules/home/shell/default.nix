@@ -1,6 +1,6 @@
-{ self, ... }: {
+{self, ...}: {
   flake.homeModules = {
-    shell = { ... }: {
+    shell = {...}: {
       imports = with self.homeModules; [
         utils-zsh
         utils-starship

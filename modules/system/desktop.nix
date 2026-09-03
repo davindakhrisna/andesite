@@ -1,10 +1,5 @@
 {
-  flake.nixosModules.desktop = {
-    lib,
-    pkgs,
-    inputs,
-    ...
-  }: {
+  flake.nixosModules.desktop = {pkgs, ...}: {
     # Hyprland UWSM
     programs.hyprland = {
       enable = true;

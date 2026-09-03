@@ -1,4 +1,9 @@
-{ lib, pkgs, inputs, ... }: {
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = lib.optional (inputs ? helium) inputs.helium.homeModules.default;
 
   home.packages = with pkgs; [
@@ -11,7 +16,7 @@
     rofimoji
 
     # File manager
-    thunar
+    kdePackages.dolphin
 
     # Audio & Bluetooth
     wiremix
@@ -44,20 +49,22 @@
     gsettings-desktop-schemas
   ];
 
-  programs.rofi.enable = true;
-  programs.btop.enable = true;
-  programs.kitty.enable = true;
-  programs.helium.enable = true;
+  programs = {
+    rofi.enable = true;
+    btop.enable = true;
+    kitty.enable = true;
+    helium.enable = true;
+  };
 
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
     Unit = {
       Description = "polkit-gnome-authentication-agent-1";
-      WantedBy = [ "graphical-session.target" ];
-      Wants = [ "graphical-session.target" ];
-      After = [ "graphical-session.target" ];
+      WantedBy = ["graphical-session.target"];
+      Wants = ["graphical-session.target"];
+      After = ["graphical-session.target"];
     };
     Install = {
-      WantedBy = [ "graphical-session.target" ];
+      WantedBy = ["graphical-session.target"];
     };
     Service = {
       Type = "simple";

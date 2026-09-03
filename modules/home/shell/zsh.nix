@@ -5,7 +5,6 @@
     config,
     ...
   }: {
-
     home.sessionVariables = {
       COLORTERM = "truecolor";
       MANPAGER = "bat -l man -p";

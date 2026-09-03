@@ -52,6 +52,10 @@
           cpu = "intel";
           gpu = "nvidia";
           nvidia.mode = "desktop";
+          dualBoot = {
+            enable = true;
+            windowsEntry = "uuid(XXXX-XXXX):/EFI/Microsoft/Boot/bootmgfw.efi";
+          };
         };
 
         # User Configuration (Home Manager level)

@@ -1,8 +1,5 @@
 {
-  flake.homeModules.productivity = {
-    pkgs,
-    ...
-  }: {
+  flake.homeModules.productivity = {pkgs, ...}: {
     services.flatpak = {
       enable = true;
       packages = [

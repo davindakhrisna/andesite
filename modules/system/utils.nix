@@ -12,7 +12,7 @@
       # Utilities
       wget
       tmux
-      psmisc        # provides killall, pstree, fuser
+      psmisc # provides killall, pstree, fuser
     ];
   };
 }
